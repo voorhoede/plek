@@ -1,0 +1,26 @@
+{
+  "name": "plek-server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "start": "node $npm_package_main"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv-safe": "^5.0.1",
+    "gh-got": "^7.0.0",
+    "jsonwebtoken": "^8.2.1",
+    "micro": "^9.1.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "url": "https://github.com/voorhoede/plek.git",
+    "type": "git"
+  },
+  "author": "Selwyn <talk@selwyn.cc> (https://selwyn.cc/)",
+  "license": "MPL-2.0"
+}

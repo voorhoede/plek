@@ -1,0 +1,122 @@
+#!/usr/bin/env node
+'use strict';
+
+const axios = require('axios');
+const commander = require('commander');
+const getCiEnv = require('get-ci-env');
+
+const exec = require('./exec.js');
+const getStdout = require('./get-stdout.js');
+const now = require('./now.js');
+
+const backendAxios = axios.create({
+  url: process.env.BACKEND_URL || 'https://plek-server.now.sh/',
+  method: 'post',
+});
+
+const cleanupFlow = ciEnv => command => {
+  backendAxios({
+    data: {
+      ciEnv,
+      commitStatus: 'Cleaning up, soapy...',
+      state: 'pending',
+    },
+  });
+
+  return command();
+};
+
+const deployFlow = ciEnv => command => {
+  backendAxios({
+    data: {
+      ciEnv,
+      commitStatus: {
+        description: 'Deploying, hang on tight...',
+        state: 'pending',
+      },
+    },
+  });
+
+  return command().then(url => {
+    backendAxios({
+      data: {
+        ciEnv,
+        commitStatus: {
+          description: 'Deployed!',
+          state: 'success',
+          target_url: url,
+        },
+      },
+    });
+
+    console.info(url);
+    return url;
+  });
+};
+
+const aliasFlow = ciEnv => (command, domain) => {
+  backendAxios({
+    data: {
+      ciEnv,
+      commitStatus: {
+        description: 'Wiring up domains, untangling...',
+        state: 'pending',
+      },
+    },
+  });
+
+  if (ciEnv.pr) {
+    process.env.DOMAIN = `pr-${ciEnv.pr.number}-${domain}`;
+  } else {
+    process.env.DOMAIN = domain;
+  }
+
+  return command().then(std => {
+    backendAxios({
+      data: {
+        ciEnv,
+        commitStatus: {
+          description: 'Deployed & aliased!',
+          state: 'success',
+          target_url: `https://${process.env.DOMAIN}`,
+        },
+      },
+    });
+
+    console.info(std);
+    return std;
+  });
+};
+
+const logFatalError = error => {
+  console.error(error);
+  process.exit(1);
+};
+
+getCiEnv().then(ciEnv => {
+  const cleanup = cleanupFlow(ciEnv);
+  const deploy = deployFlow(ciEnv);
+  const alias = aliasFlow(ciEnv);
+
+  commander.command('cleanup <command>').action(command => {
+    cleanup(() => exec(command));
+  });
+
+  commander.command('deploy <command>').action(command => {
+    deploy(() => exec(command).then(getStdout));
+  });
+
+  commander.command('alias <command> <domain>').action((command, domain) => {
+    alias(() => exec(command), domain);
+  });
+
+  commander.command('now <flags> <domain> <id>').action((flags, domain, id) => {
+    cleanup(now.cleanup(id)).then(
+      deploy(now.deploy(flags)).then(url => alias(now.alias(url), domain))
+    );
+  });
+  commander.parse(process.argv);
+});
+
+process.title = 'plek';
+process.on('unhandledRejection', logFatalError);

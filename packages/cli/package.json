@@ -1,0 +1,31 @@
+{
+  "name": "plek",
+  "version": "0.0.0-alpha",
+  "description": "",
+  "main": "src/main.js",
+  "bin": {
+    "plek": "src/main.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "start": "node $npm_package_main",
+    "test": "tape tests/*.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "commander": "^2.15.1",
+    "get-ci-env": "^1.0.1",
+    "now": "^11.1.4"
+  },
+  "devDependencies": {
+    "tape": "^4.9.0"
+  },
+  "repository": {
+    "url": "https://github.com/voorhoede/plek.git",
+    "type": "git"
+  },
+  "author": "Selwyn <talk@selwyn.cc> (https://selwyn.cc/)",
+  "license": "MPL-2.0"
+}
