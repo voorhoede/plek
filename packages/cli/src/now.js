@@ -3,7 +3,6 @@
 const axios = require('axios');
 
 const exec = require('./exec.js');
-const getStdout = require('./get-stdout.js');
 
 const nowBaseCommand = './node_modules/.bin/now --token=$NOW_TOKEN';
 
@@ -47,8 +46,12 @@ const cleanup = id =>
 module.exports = {
   cleanup: id => () => cleanup(id),
   deploy: flags => () =>
-    exec(`${nowBaseCommand} deploy ${flags}`).then(getStdout),
-  alias: url => () => exec(`${nowBaseCommand} alias set ${url} $DOMAIN`),
+    exec(`${nowBaseCommand} deploy ${flags}`).then(
+      ({ stdout, stderr }) =>
+        stderr && !stderr.includes('Success') ? Promise.reject(stderr) : stdout
+    ),
+  alias: (url, flags) => () =>
+    exec(`${nowBaseCommand} ${flags} alias set ${url} $DOMAIN`),
   getNonAliasedDeployments,
   getOldAliasedDeployments,
 };

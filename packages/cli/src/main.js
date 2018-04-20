@@ -112,7 +112,9 @@ getCiEnv().then(ciEnv => {
 
   commander.command('now <flags> <domain> <id>').action((flags, domain, id) => {
     cleanup(now.cleanup(id)).then(
-      deploy(now.deploy(flags)).then(url => alias(now.alias(url), domain))
+      deploy(now.deploy(flags)).then(url =>
+        alias(now.alias(url, flags), domain)
+      )
     );
   });
   commander.parse(process.argv);
