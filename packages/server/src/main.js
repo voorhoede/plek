@@ -66,4 +66,4 @@ const updateGithubStatus = ({
     })
     .then(response => response.body.state);
 
-server.listen(process.env.PORT);
+server.listen(0);
