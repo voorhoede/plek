@@ -67,8 +67,10 @@ const aliasFlow = ciEnv => (command, domain) => {
 
   if (ciEnv.pr) {
     process.env.DOMAIN = `pr-${ciEnv.pr.number}-${domain}`;
-  } else {
+  } else if (ciEnv.branch === 'master') {
     process.env.DOMAIN = domain;
+  } else {
+    return Promise.resolve();
   }
 
   return command().then(std => {
