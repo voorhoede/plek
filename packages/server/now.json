@@ -1,0 +1,7 @@
+{
+  "env": {
+    "NODE_ENV": "production",
+    "APP_ID": "@plek_app_id",
+    "GH_PRIVATE_KEY": "@plek_gh_private_key"
+  }
+}
