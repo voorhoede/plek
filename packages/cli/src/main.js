@@ -7,7 +7,11 @@ const getCiEnv = require('get-ci-env');
 
 const exec = require('./exec.js');
 const getStdout = require('./get-stdout.js');
-const now = require('./now.js');
+
+// Service specific dependencies
+const importLazy = require('import-lazy')(require);
+const now = importLazy('./now.js');
+const mri = importLazy('mri');
 
 const backendAxios = axios.create({
   url: process.env.BACKEND_URL || 'https://plek-server.now.sh/',
@@ -112,8 +116,8 @@ getCiEnv().then(ciEnv => {
     alias(() => exec(command), domain);
   });
 
-  commander.command('now <flags> <domain> <id>').action((flags, domain, id) => {
-    cleanup(now.cleanup(id)).then(
+  commander.command('now <flags> <domain> <app>').action((flags, domain, app) => {
+    cleanup(now.cleanup({ app, teamSlug: mri(commander.args).team })).then(
       deploy(now.deploy(flags)).then(url =>
         alias(now.alias(url, flags), domain)
       )
