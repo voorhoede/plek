@@ -29,7 +29,10 @@ const getOldAliasedDeployments = ({ deployments, aliases }) =>
 
 const getTeam = ({ teams, teamSlug }) =>
   teams.find(team => team.slug === teamSlug) ||
-  Promise.reject(`Could not find Zeit team named: '${teamSlug}'.`);
+  Promise.reject([
+    `Could not find Zeit team named: '${teamSlug}'.`,
+    'Make sure the environment variable NOW_TOKEN has access to given team.',
+  ].join('\n'));
 
 const maybeGetTeamId = teamSlug =>
   teamSlug
