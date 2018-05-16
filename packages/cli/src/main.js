@@ -34,10 +34,8 @@ const deployFlow = ciEnv => command => {
   backendAxios({
     data: {
       ciEnv,
-      commitStatus: {
-        description: 'Deploying, hang on tight...',
-        state: 'pending',
-      },
+      commitStatus: 'Deploying, hang on tight...',
+      state: 'pending',
     },
   });
 
@@ -116,13 +114,15 @@ getCiEnv().then(ciEnv => {
     alias(() => exec(command), domain);
   });
 
-  commander.command('now <flags> <domain> <app>').action((flags, domain, app) => {
-    cleanup(now.cleanup({ app, teamSlug: mri(commander.args).team })).then(
-      deploy(now.deploy(flags)).then(url =>
-        alias(now.alias(url, flags), domain)
-      )
-    );
-  });
+  commander
+    .command('now <flags> <domain> <app>')
+    .action((flags, domain, app) => {
+      cleanup(now.cleanup({ app, teamSlug: mri(commander.args).team })).then(
+        deploy(now.deploy(flags)).then(url =>
+          alias(now.alias(url, flags), domain)
+        )
+      );
+    });
   commander.parse(process.argv);
 });
 
