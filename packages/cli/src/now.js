@@ -1,10 +1,17 @@
 'use strict';
 
 const axios = require('axios');
+const path = require('path');
 
 const exec = require('./exec.js');
 
-const nowBaseCommand = './node_modules/.bin/now --token=$NOW_TOKEN';
+const nowBaseCommand = `${path.join(
+  __dirname,
+  '..',
+  'node_modules',
+  '.bin',
+  'now'
+)} --token=$NOW_TOKEN`;
 
 const zeitAxios = axios.create({
   baseURL: 'https://api.zeit.co/v3',
