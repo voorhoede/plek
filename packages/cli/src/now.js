@@ -72,12 +72,12 @@ const cleanup = ({ app, teamSlug }) =>
 module.exports = {
   cleanup: id => () => cleanup(id),
   deploy: flags => () =>
-    exec(`${nowBaseCommand} deploy ${flags}`).then(
+    exec(`${nowBaseCommand} ${flags} deploy`).then(
       ({ stdout, stderr }) =>
         stderr && !stderr.includes('Success') ? Promise.reject(stderr) : stdout
     ),
   alias: (url, flags) => () =>
-    exec(`${nowBaseCommand} ${flags} alias set ${url} $DOMAIN`),
+    exec(`${nowBaseCommand} alias set ${url} $DOMAIN`),
   getNonAliasedDeployments,
   getOldAliasedDeployments,
 };
