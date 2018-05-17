@@ -67,3 +67,13 @@ const updateGithubStatus = ({
     .then(response => response.body.state);
 
 server.listen(0);
+console.info(`Server launched at http://localhost:${server.address().port}`);
+
+['SIGINT', 'SIGTERM'].forEach(function(signal) {
+  process.on(signal, function() {
+    console.info('Closing server');
+    server.close(process.exit);
+  });
+});
+
+module.exports = server;
