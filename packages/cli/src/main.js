@@ -13,6 +13,8 @@ const importLazy = require('import-lazy')(require);
 const now = importLazy('./now.js');
 const mri = importLazy('mri');
 
+const hasSubdomain = domain => domain.split('.').length > 2;
+
 const backendAxios = axios.create({
   url: process.env.BACKEND_URL || 'https://plek-server.now.sh/',
   method: 'post',
@@ -57,6 +59,8 @@ const deployFlow = ciEnv => command => {
 };
 
 const aliasFlow = ciEnv => (command, domain) => {
+  const domainDivider = hasSubdomain(domain) ? '-' : '.';
+
   backendAxios({
     data: {
       ciEnv,
@@ -68,7 +72,7 @@ const aliasFlow = ciEnv => (command, domain) => {
   });
 
   if (ciEnv.pr) {
-    process.env.DOMAIN = `pr-${ciEnv.pr.number}-${domain}`;
+    process.env.DOMAIN = `pr-${ciEnv.pr.number}${domainDivider}${domain}`;
   } else if (ciEnv.branch === 'master') {
     process.env.DOMAIN = domain;
   } else {
