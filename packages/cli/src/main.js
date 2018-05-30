@@ -121,9 +121,11 @@ getCiEnv().then(ciEnv => {
   commander
     .command('now <flags> <domain> <app>')
     .action((flags, domain, app) => {
-      cleanup(now.cleanup({ app, teamSlug: mri(commander.args).team })).then(
+      const teamSlug = mri(commander.args).team;
+
+      cleanup(now.cleanup({ app, teamSlug })).then(
         deploy(now.deploy(flags)).then(url =>
-          alias(now.alias(url, flags), domain)
+          alias(now.alias({ url, teamSlug }), domain)
         )
       );
     });

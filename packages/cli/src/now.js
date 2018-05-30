@@ -70,14 +70,16 @@ const cleanup = ({ app, teamSlug }) =>
   );
 
 module.exports = {
-  cleanup: id => () => cleanup(id),
+  cleanup: args => () => cleanup(args),
   deploy: flags => () =>
-    exec(`${nowBaseCommand} ${flags} deploy`).then(
+    exec(`${nowBaseCommand} deploy ${flags}`).then(
       ({ stdout, stderr }) =>
         stderr && !stderr.includes('Success') ? Promise.reject(stderr) : stdout
     ),
-  alias: (url, flags) => () =>
-    exec(`${nowBaseCommand} alias set ${url} $DOMAIN`),
+  alias: ({ url, teamSlug }) => () => {
+    const teamFlag = teamSlug ? `--team ${teamSlug}` : '';
+    return exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`);
+  },
   getNonAliasedDeployments,
   getOldAliasedDeployments,
 };
