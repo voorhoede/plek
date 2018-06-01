@@ -7,6 +7,8 @@ To run the CLI it will need to be in your `$PATH`, meaning it can be located. De
 ### [ZEIT Now](https://zeit.co/now)
 `plek now [options] <flags> <domain> <app>`
 
+Note that the `NOW_TOKEN` environment variable is required.
+
 #### flags
 Accepts the flags that are passed to the Now CLI.
 

@@ -1,0 +1,8 @@
+{
+  "name": "Plek",
+  "short_name": "Plek",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#ffc107"
+}
