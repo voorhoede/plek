@@ -1,17 +1,23 @@
 'use strict';
 
 const axios = require('axios');
+const fs = require('fs');
 const path = require('path');
 
 const exec = require('./exec.js');
 
-const nowBaseCommand = `${path.join(
-  __dirname,
-  '..',
-  'node_modules',
-  '.bin',
-  'now'
-)} --token=$NOW_TOKEN`;
+const isExecutable = path => {
+  try {
+    fs.accessSync(path, fs.constants.X_OK);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+const nowBaseCommand = module.paths
+  .map(directory => path.join(directory, '.bin', 'now'))
+  .filter(isExecutable)[0];
 
 const zeitAxios = axios.create({
   baseURL: 'https://api.zeit.co/v3',
