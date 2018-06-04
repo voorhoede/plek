@@ -11,7 +11,9 @@
   ],
   "scripts": {
     "start": "node $npm_package_main",
-    "test": "tape tests/*.js"
+    "test": "tape tests/*.js",
+    "preversion": "npm test",
+    "postversion": "git push --follow-tags"
   },
   "dependencies": {
     "axios": "^0.18.0",
