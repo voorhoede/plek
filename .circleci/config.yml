@@ -13,15 +13,30 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-{{ checksum "packages/cli/package.json" }}-{{ checksum "packages/server/package.json" }}-{{ checksum "website/package.json" }}
           - v1-dependencies-
 
-      - run: npm install
+      - run:
+          name: Install CLI dependencies
+          command: npm install
+          working_directory: packages/cli
+
+      - run:
+          name: Install server dependencies
+          command: npm install
+          working_directory: packages/server
+
+      - run:
+          name: Install website dependencies
+          command: npm install
+          working_directory: website
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - packages/cli/node_modules
+            - packages/server/node_modules
+            - website/node_modules
+          key: v1-dependencies-{{ checksum "packages/cli/package.json" }}-{{ checksum "packages/server/package.json" }}-{{ checksum "website/package.json" }}
 
       - persist_to_workspace:
           root: ~/repo
@@ -37,12 +52,30 @@ jobs:
       - run:
           name: Publish package
           command: npm publish
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Deploy documentation website
+          command: |
+            npm run build
+            cd docs/.vuepress/dist
+            npx plek now -- '--team devoorhoede -n plek-website' 'plek.now.sh' 'plek-website'
+          working_directory: website
 
 workflows:
   version: 2
   setup-publish:
     jobs:
       - setup:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - setup
           filters:
             tags:
               only: /^v.*/
