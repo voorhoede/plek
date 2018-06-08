@@ -3,12 +3,16 @@
 const dotenv = require('dotenv-safe').config();
 const fs = require('fs');
 const ghGot = require('gh-got');
+const memoize = require('lodash.memoize');
 const micro = require('micro');
 
 const ghAuth = require('./gh-auth.js');
 
 const server = micro(async (request, result) => {
-  const { ciEnv: { repo, commit }, commitStatus } = await micro.json(request);
+  const {
+    ciEnv: { repo, commit },
+    commitStatus,
+  } = await micro.json(request);
 
   ghAuth
     .getAppToken({
@@ -39,17 +43,20 @@ const server = micro(async (request, result) => {
   return '';
 });
 
-const getInstallation = ({ appToken, owner }) =>
-  ghGot
-    .get('app/installations', {
-      headers: {
-        accept: 'application/vnd.github.machine-man-preview+json',
-        authorization: `Bearer ${appToken}`,
-      },
-    })
-    .then(({ body }) =>
-      body.find(installation => installation.account.login === owner)
-    );
+const getInstallation = memoize(
+  ({ appToken, owner }) =>
+    ghGot
+      .get('app/installations?per_page=100', {
+        headers: {
+          accept: 'application/vnd.github.machine-man-preview+json',
+          authorization: `Bearer ${appToken}`,
+        },
+      })
+      .then(({ body }) =>
+        body.find(installation => installation.account.login === owner)
+      ),
+  ({ owner }) => owner
+);
 
 const updateGithubStatus = ({
   body,
