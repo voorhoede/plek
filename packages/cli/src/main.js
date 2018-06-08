@@ -119,12 +119,15 @@ getCiEnv().then(ciEnv => {
   });
 
   commander
-    .command('now <flags> <domain> <app>')
-    .action((flags, domain, app) => {
+    .command('now <domain>')
+    .option('-c, --config <config>', 'Zeit Now CLI configuration flags', '')
+    .option('-a, --app <app>', 'Zeit Now app name')
+    .action((domain, { config, app }) => {
+      if (!app) throw Error('Missing Zeit Now app name argument');
       const teamSlug = mri(commander.args).team;
 
       cleanup(now.cleanup({ app, teamSlug })).then(
-        deploy(now.deploy(flags)).then(url =>
+        deploy(now.deploy(config)).then(url =>
           alias(now.alias({ url, teamSlug }), domain)
         )
       );
