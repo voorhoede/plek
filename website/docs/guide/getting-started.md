@@ -29,7 +29,7 @@ cache:
 
 script:
   - npm install
-  - npx plek now -- '--team yourteam' 'yourdomain.cc' 'project-name'
+  - npx plek now yourdomain.cc --config '--team yourteam' --app 'project-name'
 ```
 
 #### [Circle CI](https://circleci.com/)
@@ -50,7 +50,7 @@ jobs:
 
       - run: npm install
 
-      - run: npx plek now -- '--team yourteam' 'yourdomain.cc' 'project-name'
+      - run: npx plek now yourdomain.cc --config '--team yourteam' --app 'project-name'
 
       - save_cache:
           paths:
