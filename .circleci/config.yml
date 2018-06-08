@@ -72,13 +72,10 @@ workflows:
       - setup:
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
       - deploy:
           requires:
             - setup
-          filters:
-            tags:
-              only: /^v.*/
       - publish:
           requires:
             - setup
@@ -86,4 +83,4 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
