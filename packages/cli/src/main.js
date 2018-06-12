@@ -124,7 +124,7 @@ getCiEnv().then(ciEnv => {
     .option('-a, --app <app>', 'Zeit Now app name')
     .action((domain, { config, app }) => {
       if (!app) throw Error('Missing Zeit Now app name argument');
-      const teamSlug = mri(commander.args).team;
+      const teamSlug = mri(commander.rawArgs).team;
 
       cleanup(now.cleanup({ app, teamSlug })).then(
         deploy(now.deploy(config)).then(url =>
