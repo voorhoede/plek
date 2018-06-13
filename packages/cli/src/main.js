@@ -131,6 +131,8 @@ getCiEnv().then(ciEnv => {
     }))
     .action((domain, { config, app, team }) => {
       if (!app) throw Error('Missing Zeit Now app name argument');
+      if (!process.env.NOW_TOKEN)
+        throw new Error('Missing NOW_TOKEN environment variable.');
 
       cleanup(now.cleanup({ app, teamSlug: team.slug })).then(
         deploy(now.deploy({ config, teamFlag: team.flag })).then(url =>
