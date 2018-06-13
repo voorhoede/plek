@@ -6,6 +6,9 @@ const path = require('path');
 
 const exec = require('./exec.js');
 
+if (!process.env.NOW_TOKEN)
+  throw new Error('Missing NOW_TOKEN environment variable.');
+
 const isExecutable = path => {
   try {
     fs.accessSync(path, fs.constants.X_OK);
