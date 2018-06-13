@@ -11,7 +11,6 @@ const getStdout = require('./get-stdout.js');
 // Service specific dependencies
 const importLazy = require('import-lazy')(require);
 const now = importLazy('./now.js');
-const mri = importLazy('mri');
 
 const hasSubdomain = domain => domain.split('.').length > 2;
 
@@ -124,18 +123,22 @@ getCiEnv().then(ciEnv => {
 
   commander
     .command('now <domain>')
-    .option('-c, --config <config>', 'Zeit Now CLI configuration flags', '')
     .option('-a, --app <app>', 'Zeit Now app name')
-    .action((domain, { config, app }) => {
+    .option('-c, --config <config>', 'Zeit Now CLI configuration flags', '')
+    .option('--team [team]', 'Zeit team name', team => ({
+      flag: `--team ${team}`,
+      slug: team,
+    }))
+    .action((domain, { config, app, team }) => {
       if (!app) throw Error('Missing Zeit Now app name argument');
-      const teamSlug = mri(commander.rawArgs).team;
 
-      cleanup(now.cleanup({ app, teamSlug })).then(
-        deploy(now.deploy(config)).then(url =>
-          alias(now.alias({ url, teamSlug }), domain)
+      cleanup(now.cleanup({ app, teamSlug: team.slug })).then(
+        deploy(now.deploy({ config, teamFlag: team.flag })).then(url =>
+          alias(now.alias({ url, teamFlag: team.flag }), domain)
         )
       );
     });
+
   commander.parse(process.argv);
 });
 

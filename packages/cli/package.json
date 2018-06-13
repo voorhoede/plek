@@ -20,7 +20,6 @@
     "commander": "^2.15.1",
     "get-ci-env": "^1.0.1",
     "import-lazy": "^3.1.0",
-    "mri": "^1.1.0",
     "now": "^11.1.4"
   },
   "devDependencies": {

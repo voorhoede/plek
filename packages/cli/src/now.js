@@ -44,10 +44,12 @@ const getOldAliasedDeployments = ({ deployments, aliases }) =>
 
 const getTeam = ({ teams, teamSlug }) =>
   teams.find(team => team.slug === teamSlug) ||
-  Promise.reject([
-    `Could not find Zeit team named: '${teamSlug}'.`,
-    'Make sure the environment variable NOW_TOKEN has access to given team.',
-  ].join('\n'));
+  Promise.reject(
+    [
+      `Could not find Zeit team named: '${teamSlug}'.`,
+      'Make sure the environment variable NOW_TOKEN has access to given team.',
+    ].join('\n')
+  );
 
 const maybeGetTeamId = teamSlug =>
   teamSlug
@@ -79,15 +81,13 @@ const cleanup = ({ app, teamSlug }) =>
 
 module.exports = {
   cleanup: args => () => cleanup(args),
-  deploy: flags => () =>
-    exec(`${nowBaseCommand} deploy ${flags}`).then(
+  deploy: ({ config, teamFlag }) => () =>
+    exec(`${nowBaseCommand} deploy ${teamFlag} ${config}`).then(
       ({ stdout, stderr }) =>
         stderr && !stderr.includes('Success') ? Promise.reject(stderr) : stdout
     ),
-  alias: ({ url, teamSlug }) => () => {
-    const teamFlag = teamSlug ? `--team ${teamSlug}` : '';
-    return exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`);
-  },
+  alias: ({ url, teamFlag }) => () =>
+    exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`),
   getNonAliasedDeployments,
   getOldAliasedDeployments,
 };
