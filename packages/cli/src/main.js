@@ -24,8 +24,10 @@ const cleanupFlow = ciEnv => command => {
   backendAxios({
     data: {
       ciEnv,
-      commitStatus: 'Cleaning up, soapy...',
-      state: 'pending',
+      commitStatus: {
+        description: 'Cleaning up, soapy...',
+        state: 'pending',
+      },
     },
   });
 
@@ -36,8 +38,10 @@ const deployFlow = ciEnv => command => {
   backendAxios({
     data: {
       ciEnv,
-      commitStatus: 'Deploying, hang on tight...',
-      state: 'pending',
+      commitStatus: {
+        description: 'Deploying, hang on tight...',
+        state: 'pending',
+      },
     },
   });
 
