@@ -7,7 +7,11 @@ To run the CLI it will need to be in your `$PATH`, meaning it can be located. De
 ### [ZEIT Now](https://zeit.co/now)
 `plek now <domain> --config <config> --app <app>`
 
-Note that the `NOW_TOKEN` environment variable is required.
+To use the CLI make sure the the `NOW_TOKEN` environment variable is set.
+
+::: tip
+Set the [Now deployment region](https://zeit.co/docs/features/scaling) to ensure the appropriate region is used, the location detection of the Now CLI does not always go well with the CI service.
+:::
 
 #### flags
 Accepts the flags that are passed to the Now CLI.

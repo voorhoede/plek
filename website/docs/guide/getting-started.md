@@ -14,7 +14,9 @@ The Plek CLI is provided as an npm package. When the project uses Node.js and np
 ### CI service
 The way to run the Plek CLI for each commit is different for each service, following are supported CI services examples.
 
-> Note that at the moment Node.js version 8 or higher is required.
+::: tip NOTE
+At the moment Node.js version 8 or higher is required to run the CLI.
+:::
 
 #### [Travis CI](https://travis-ci.com/)
 ```yaml
