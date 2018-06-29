@@ -2,10 +2,10 @@
 
 const dotenv = require('dotenv-safe').config();
 const fs = require('fs');
-const ghGot = require('gh-got');
 const memoize = require('lodash.memoize');
 const micro = require('micro');
 
+const ghApi = require('./gh-api.js');
 const ghAuth = require('./gh-auth.js');
 
 const server = micro(async (request, result) => {
@@ -45,15 +45,12 @@ const server = micro(async (request, result) => {
 
 const getInstallation = memoize(
   ({ appToken, owner }) =>
-    ghGot
-      .get('app/installations?per_page=100', {
-        headers: {
-          accept: 'application/vnd.github.machine-man-preview+json',
-          authorization: `Bearer ${appToken}`,
-        },
-      })
-      .then(({ body }) =>
-        body.find(installation => installation.account.login === owner)
+    ghApi({
+      url: 'app/installations?per_page=100',
+      token: appToken,
+    })
+      .then(({ data }) =>
+        data.find(installation => installation.account.login === owner)
       ),
   ({ owner }) => owner
 );
@@ -63,15 +60,16 @@ const updateGithubStatus = ({
   integrationEnv: { repo, commit },
   token,
 }) =>
-  ghGot
-    .post(`repos/${repo.owner}/${repo.name}/statuses/${commit}`, {
-      token,
-      body: {
-        ...body,
-        context: 'plek',
-      },
-    })
-    .then(response => response.body.state);
+  ghApi({
+    method: 'post',
+    url: `repos/${repo.owner}/${repo.name}/statuses/${commit}`,
+    token,
+    data: {
+      ...body,
+      context: 'plek',
+    },
+  })
+    .then(response => response.data.state);
 
 server.listen(0);
 console.info(`Server launched at http://localhost:${server.address().port}`);

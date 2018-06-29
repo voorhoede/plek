@@ -1,7 +1,8 @@
 'use strict';
 
-const axios = require('axios');
 const jsonwebtoken = require('jsonwebtoken');
+
+const ghApi = require('./gh-api.js');
 
 const getAppToken = ({ appId, privateKey }) =>
   Promise.resolve(
@@ -13,14 +14,10 @@ const getAppToken = ({ appId, privateKey }) =>
   );
 
 const getAppInstallationToken = ({ installationId, appToken }) =>
-  axios({
-    url: `installations/${installationId}/access_tokens`,
+  ghApi({
     method: 'post',
-    baseURL: 'https://api.github.com/',
-    headers: {
-      accept: 'application/vnd.github.machine-man-preview+json',
-      authorization: `Bearer ${appToken}`,
-    },
+    url: `installations/${installationId}/access_tokens`,
+    token: appToken,
   }).then(response => response.data.token);
 
 module.exports = {
