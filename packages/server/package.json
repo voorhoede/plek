@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "dotenv-safe": "^5.0.1",
+    "dotenv-safe": "^6.0.0",
     "jsonwebtoken": "^8.2.1",
     "lodash.memoize": "^4.1.2",
     "micro": "^9.1.4"
