@@ -81,8 +81,8 @@ const cleanup = ({ app, teamSlug }) =>
 
 module.exports = {
   cleanup: args => () => cleanup(args),
-  deploy: ({ config, teamFlag }) => () =>
-    exec(`${nowBaseCommand} deploy ${teamFlag} ${config}`).then(
+  deploy: ({ config, teamFlag, app }) => () =>
+    exec(`${nowBaseCommand} deploy ${teamFlag} --name ${app} ${config}`).then(
       ({ stdout, stderr }) =>
         stderr && !stderr.includes('Success') ? Promise.reject(stderr) : stdout
     ),

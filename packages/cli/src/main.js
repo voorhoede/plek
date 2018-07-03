@@ -135,7 +135,7 @@ getCiEnv().then(ciEnv => {
         throw new Error('Missing NOW_TOKEN environment variable.');
 
       cleanup(now.cleanup({ app, teamSlug: team.slug })).then(
-        deploy(now.deploy({ config, teamFlag: team.flag })).then(url =>
+        deploy(now.deploy({ config, app, teamFlag: team.flag })).then(url =>
           alias(now.alias({ url, teamFlag: team.flag }), domain)
         )
       );
