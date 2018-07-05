@@ -10,6 +10,7 @@ const ghAuth = require('./gh-auth.js');
 
 const server = micro(async (request, result) => {
   const {
+    name,
     ciEnv: { repo, commit },
     commitStatus,
   } = await micro.json(request);
@@ -30,6 +31,7 @@ const server = micro(async (request, result) => {
     )
     .then(token =>
       updateGithubStatus({
+        name,
         body: commitStatus,
         integrationEnv: {
           repo,
@@ -56,6 +58,7 @@ const getInstallation = memoize(
 );
 
 const updateGithubStatus = ({
+  name,
   body,
   integrationEnv: { repo, commit },
   token,
@@ -66,7 +69,7 @@ const updateGithubStatus = ({
     token,
     data: {
       ...body,
-      context: 'plek',
+      context: `plek${name ? `/${name}` : ''}`,
     },
   })
     .then(response => response.data.state);

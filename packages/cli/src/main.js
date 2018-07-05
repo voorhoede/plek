@@ -4,6 +4,7 @@
 const axios = require('axios');
 const commander = require('commander');
 const getCiEnv = require('get-ci-env');
+const path = require('path');
 
 const exec = require('./exec.js');
 const getStdout = require('./get-stdout.js');
@@ -17,6 +18,10 @@ const hasSubdomain = domain => domain.split('.').length > 2;
 const backendAxios = axios.create({
   url: process.env.BACKEND_URL || 'https://plek-server.now.sh/',
   method: 'post',
+  transformRequest: data => JSON.stringify({
+    ...data,
+    name: path.parse(process.cwd()).name,
+  }),
 });
 
 const cleanupFlow = ciEnv => command => {
