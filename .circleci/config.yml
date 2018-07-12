@@ -67,7 +67,7 @@ jobs:
           working_directory: website
       - run:
           name: Deploy server
-          command: npx plek now plek-server.now.sh --config '--team devoorhoede' --app 'plek-server'
+          command: npx plek now plek-server.now.sh --team devoorhoede --app 'plek-server'
           working_directory: packages/server
 
 workflows:
