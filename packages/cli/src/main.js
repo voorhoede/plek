@@ -133,10 +133,15 @@ commander
     flag: `--team ${team}`,
     slug: team,
   }))
-  .action((domain, { config, app, team }) => {
+  .action((domain, { config, app, team = {} }) => {
     if (!app) throw Error('Missing Zeit Now app name argument');
     if (!process.env.NOW_TOKEN)
       throw new Error('Missing NOW_TOKEN environment variable.');
+
+    team = {
+      flag: team.flag || '',
+      slug: team.slug || '',
+    };
 
     cleanup(now.cleanup({ app, teamSlug: team.slug })).then(
       deploy(now.deploy({ config, app, teamFlag: team.flag })).then(url =>
