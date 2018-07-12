@@ -9,6 +9,7 @@ module.exports = {
     docsDir: 'docs',
     nav: [
       { text: 'Documentation', link: '/guide/' },
+      { text: 'Install App', link: 'https://github.com/apps/plek' },
     ],
     sidebarDepth: 2,
     sidebar: [
