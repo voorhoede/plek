@@ -2,7 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.2] - 2018-06-13
+## [2.0.0] - 2018-07-12
+### Added
+- Context of the current directory to support monorepos!
+
+### Changed
+- Use provided Zeit Now app name argument as deployment name.
+- Pass Zeit team name as `team` flag instead of putting it inside the `config` flag value.
+- Be able to show help information when using `plek --help` outside CI environments, very handy...
+
 ### Fixed
 - Updating the GitHub commit status during cleanup and deployment.
 
