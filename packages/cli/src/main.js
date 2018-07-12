@@ -69,6 +69,14 @@ const deployFlow = command => ciEnv => {
 const aliasFlow = (command, domain) => ciEnv => {
   const domainDivider = hasSubdomain(domain) ? '-' : '.';
 
+  if (ciEnv.pr) {
+    process.env.DOMAIN = `pr-${ciEnv.pr.number}${domainDivider}${domain}`;
+  } else if (ciEnv.branch === 'master') {
+    process.env.DOMAIN = domain;
+  } else {
+    return Promise.resolve();
+  }
+
   backendAxios({
     data: {
       ciEnv,
@@ -78,14 +86,6 @@ const aliasFlow = (command, domain) => ciEnv => {
       },
     },
   });
-
-  if (ciEnv.pr) {
-    process.env.DOMAIN = `pr-${ciEnv.pr.number}${domainDivider}${domain}`;
-  } else if (ciEnv.branch === 'master') {
-    process.env.DOMAIN = domain;
-  } else {
-    return Promise.resolve();
-  }
 
   return command().then(std => {
     backendAxios({
