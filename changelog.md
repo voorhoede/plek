@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2018-07-12
+### Fixed
+- Passing no team to the Now subcommand.
+
 ## [2.0.0] - 2018-07-12
 ### Added
 - Context of the current directory to support monorepos!
@@ -22,5 +26,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - Initial release!
 
-[1.0.2]: https://github.com/voorhoede/plek/compare/v1.0.1...v1.0.2
+[2.0.1]: https://github.com/voorhoede/plek/compare/v2.0.1...v2.0.0
+[2.0.0]: https://github.com/voorhoede/plek/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/voorhoede/plek/compare/v1.0.0...v1.0.1
