@@ -10,6 +10,7 @@ module.exports = {
     nav: [
       { text: 'Documentation', link: '/guide/' },
       { text: 'Install App', link: 'https://github.com/apps/plek' },
+      { text: 'Changelog', link: 'https://github.com/voorhoede/plek/blob/master/changelog.md' },
     ],
     sidebarDepth: 2,
     sidebar: [
