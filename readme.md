@@ -3,7 +3,8 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/github/voorhoede/plek.svg?style=flat-square)](https://circleci.com/gh/voorhoede/plek/)
 [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/plek)
-[![David](https://img.shields.io/david/voorhoede/plek.svg?style=flat-square)](https://david-dm.org/voorhoede/plek)
+[![David CLI](https://img.shields.io/david/voorhoede/plek.svg?path=packages/cli&style=flat-square&label=cli)](https://david-dm.org/voorhoede/plek)
+[![David Server](https://img.shields.io/david/voorhoede/plek.svg?path=packages/server&style=flat-square&label=server)](https://david-dm.org/voorhoede/plek)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/g/voorhoede/plek.svg?style=flat-square)](https://lgtm.com/projects/g/voorhoede/plek/)
 
 
