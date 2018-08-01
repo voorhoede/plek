@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2018-08-01
+### Changed
+- Use Zeit Now token as environment variable without interpreting for added security.
+
 ## [2.0.1] - 2018-07-12
 ### Fixed
 - Passing no team to the Now subcommand.
@@ -26,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - Initial release!
 
+[2.0.2]: https://github.com/voorhoede/plek/compare/v2.0.2...v2.0.1
 [2.0.1]: https://github.com/voorhoede/plek/compare/v2.0.1...v2.0.0
 [2.0.0]: https://github.com/voorhoede/plek/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/voorhoede/plek/compare/v1.0.0...v1.0.1
