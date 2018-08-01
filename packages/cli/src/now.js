@@ -19,7 +19,7 @@ const nowCli = module.paths
   .map(directory => path.join(directory, '.bin', 'now'))
   .filter(isExecutable)[0];
 
-const nowBaseCommand = `${nowCli} --token ${process.env.NOW_TOKEN}`;
+const nowBaseCommand = `${nowCli} --token $NOW_TOKEN`;
 
 const zeitAxios = axios.create({
   baseURL: 'https://api.zeit.co/v3',
