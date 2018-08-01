@@ -63,7 +63,7 @@ jobs:
           command: |
             npm run build
             cd docs/.vuepress/dist
-            npx plek now plek.now.sh --config '--team devoorhoede' --app 'plek-website'
+            npx plek now plek.now.sh --team devoorhoede --app 'plek-website'
           working_directory: website
       - run:
           name: Deploy server
