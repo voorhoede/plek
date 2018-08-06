@@ -1,22 +1,20 @@
 # Getting started
 
 ## Continuous integration
-Plek runs from a continuous integration (CI) service as a CLI in the form of a Node.js package. From there the commit context and files are used to deploy. Check out the supported CI services with configuration examples.
+Plek runs from a continuous integration (CI) service as a command line tool (CLI). Plek uses the environment variables and files available in the CI to deploy and integrate.
 
 ## Installation
 ### GitHub
-First enable Plek to integrate with GitHub by installing the GitHub app from the [GitHub app page](https://github.com/apps/plek). Make sure to give access to the repository you intend to deploy.
+To integrate Plek with GitHub install the [Plek GitHub app](https://github.com/apps/plek).
 
 ### CLI
-The Plek CLI is provided as an npm package. When the project uses Node.js and npm the recommended way to include Plek is by installing it as a development dependency with `npm install -D plek`. This way the version is pinned and the module can be cached by the CI service. Alternatively install Plek globally during the CI tasks to get a specific version range: `npm install --global plek@1` or skip installation and only use `npx` before each command.
-
+`npx plek` will run the Plek CLI as it is a npm package. When your project uses Node.js the recommended way to include Plek is by installing it as a development dependency with `npm install -D plek`. This way the version is pinned and the module can be cached by the CI service. Alternatively use the latest version and skip installation by only using `npx plek`.
 
 ### CI service
-The way to run the Plek CLI for each commit is different for each service, following are supported CI services examples.
-
 ::: tip NOTE
-At the moment Node.js version 8 or higher is required to run the CLI.
+Node.js version 8 or higher is required to run the CLI.
 :::
+Where and when to run Plek is up to you. Following are two minimal examples showing how to run Plek for each commit using the ZEIT Now service.
 
 #### [Travis CI](https://travis-ci.com/)
 ```yaml
@@ -31,7 +29,7 @@ cache:
 
 script:
   - npm install
-  - npx plek now yourdomain.cc --config '--team yourteam' --app 'project-name'
+  - npx plek now yourdomain.cc --app 'project-name'
 ```
 
 #### [Circle CI](https://circleci.com/)
@@ -39,7 +37,7 @@ script:
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
+    working_directory: ~/project-name
 
     docker:
       - image: circleci/node:8
@@ -52,7 +50,7 @@ jobs:
 
       - run: npm install
 
-      - run: npx plek now yourdomain.cc --config '--team yourteam' --app 'project-name'
+      - run: npx plek now yourdomain.cc --app 'project-name'
 
       - save_cache:
           paths:

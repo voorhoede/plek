@@ -6,7 +6,7 @@ module.exports = {
   themeConfig: {
     repo: 'voorhoede/plek',
     editLinks: true,
-    docsDir: 'docs',
+    docsDir: 'website/docs',
     nav: [
       { text: 'Documentation', link: '/guide/' },
       { text: 'Install App', link: 'https://github.com/apps/plek' },
