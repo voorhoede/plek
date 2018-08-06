@@ -1,7 +1,7 @@
 # Getting started
 
 ## Continuous integration
-Plek runs from a continuous integration (CI) service as a command line tool (CLI). Plek uses the environment variables and files available in the CI.
+Plek runs from a continuous integration (CI) service as a command line tool (CLI). Plek uses the environment variables and files available in the CI to deploy and integrate.
 
 ## Installation
 ### GitHub
