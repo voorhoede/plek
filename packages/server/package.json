@@ -15,7 +15,8 @@
     "dotenv-safe": "^6.0.0",
     "jsonwebtoken": "^8.2.1",
     "lodash.memoize": "^4.1.2",
-    "micro": "^9.1.4"
+    "micro": "^9.1.4",
+    "raven": "^2.6.3"
   },
   "devDependencies": {},
   "repository": {

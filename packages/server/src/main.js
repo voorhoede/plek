@@ -4,9 +4,14 @@ const dotenv = require('dotenv-safe').config();
 const fs = require('fs');
 const memoize = require('lodash.memoize');
 const micro = require('micro');
+const raven = require('raven');
 
 const ghApi = require('./gh-api.js');
 const ghAuth = require('./gh-auth.js');
+
+raven
+  .config('https://032b525989a645b991503e629465f8c4@sentry.io/1260219')
+  .install();
 
 const server = micro(async (request, result) => {
   const {
@@ -40,7 +45,6 @@ const server = micro(async (request, result) => {
         token,
       })
     )
-    .catch(console.error);
 
   return '';
 });
@@ -74,7 +78,7 @@ const updateGithubStatus = ({
   })
     .then(response => response.data.state);
 
-server.listen(0);
+server.listen(process.env.PORT || 0);
 console.info(`Server launched at http://localhost:${server.address().port}`);
 
 ['SIGINT', 'SIGTERM'].forEach(function(signal) {
@@ -82,6 +86,11 @@ console.info(`Server launched at http://localhost:${server.address().port}`);
     console.info('Closing server');
     server.close(process.exit);
   });
+});
+
+process.on('unhandledRejection', error => {
+  console.error(error);
+  raven.captureException(error);
 });
 
 module.exports = server;

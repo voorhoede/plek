@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const exec = require('./exec.js');
+const fatalError = require('./fatal-error.js');
 
 const isExecutable = path => {
   try {
@@ -77,7 +78,11 @@ const cleanup = ({ app, teamSlug }) =>
           zeitAxios.delete(`/now/deployments/${uid}`, { params: { teamId } })
         )
       )
-  );
+  )
+  .catch(error => {
+    if (error.response && error.response.data.error.code === 'forbidden')
+      fatalError('The specified Now token is invalid.');
+  });
 
 module.exports = {
   cleanup: args => () => cleanup(args),

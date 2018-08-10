@@ -5,13 +5,19 @@ const axios = require('axios');
 const commander = require('commander');
 const getCiEnv = require('get-ci-env');
 const path = require('path');
+const raven = require('raven');
 
 const exec = require('./exec.js');
+const fatalError = require('./fatal-error.js');
 const getStdout = require('./get-stdout.js');
 
 // Service specific dependencies
 const importLazy = require('import-lazy')(require);
 const now = importLazy('./now.js');
+
+raven
+  .config('https://7e1cc5b59bf742d587a7651bedcd95a8@sentry.io/1260110')
+  .install();
 
 const hasSubdomain = domain => domain.split('.').length > 2;
 
@@ -104,11 +110,6 @@ const aliasFlow = (command, domain) => ciEnv => {
   });
 };
 
-const logFatalError = error => {
-  console.error(error);
-  process.exit(1);
-};
-
 const [cleanup, deploy, alias] = [cleanupFlow, deployFlow, aliasFlow].map(
   flow => (...args) => getCiEnv().then(flow(...args))
 );
@@ -153,4 +154,4 @@ commander
 commander.parse(process.argv);
 
 process.title = 'plek';
-process.on('unhandledRejection', logFatalError);
+process.on('unhandledRejection', fatalError);

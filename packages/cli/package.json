@@ -20,7 +20,8 @@
     "commander": "^2.15.1",
     "get-ci-env": "^1.0.1",
     "import-lazy": "^3.1.0",
-    "now": "^11.1.4"
+    "now": "^11.1.4",
+    "raven": "^2.6.3"
   },
   "devDependencies": {
     "tape": "^4.9.0"
