@@ -10,7 +10,7 @@
   "dependencies": {},
   "devDependencies": {
     "plek": "^2.0.0",
-    "vuepress": "^0.13.0"
+    "vuepress": "^0.14.0"
   },
   "repository": {
     "url": "https://github.com/voorhoede/plek.git",

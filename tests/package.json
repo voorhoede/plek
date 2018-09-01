@@ -3,7 +3,7 @@
     "test": "ava main-flow.js"
   },
   "devDependencies": {
-    "ava": "1.0.0-beta.6",
+    "ava": "1.0.0-beta.8",
     "dotenv-safe": "^6.0.0"
   }
 }
