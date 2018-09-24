@@ -1,13 +1,14 @@
 'use strict';
 
-const dotenv = require('dotenv-safe').config();
-const fs = require('fs');
+const dotenv = require('dotenv-safe');
 const memoize = require('lodash.memoize');
 const micro = require('micro');
 const raven = require('raven');
 
 const ghApi = require('./gh-api.js');
 const ghAuth = require('./gh-auth.js');
+
+dotenv.config();
 
 raven
   .config('https://032b525989a645b991503e629465f8c4@sentry.io/1260219')
