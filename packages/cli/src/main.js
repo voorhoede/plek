@@ -49,7 +49,7 @@ const deployFlow = command => ciEnv => {
     data: {
       ciEnv,
       commitStatus: {
-        description: 'Deploying, hang on tight...',
+        description: 'Deploying, hang on...',
         state: 'pending',
       },
     },
