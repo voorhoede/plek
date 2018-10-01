@@ -18,6 +18,7 @@ Node.js version 8 or higher is required to run the CLI.
 Where and when to run Plek is up to you but most of the time it will be from a CI script. Following are two minimal examples showing how to run Plek for each commit using the ZEIT Now service. Most of it is boilerplate the command using `npx plek` is where the magic happens.
 
 #### [Travis CI](https://travis-ci.com/)
+*.travis.yml*
 ```yaml
 language: node_js
 
@@ -34,6 +35,7 @@ script:
 ```
 
 #### [Circle CI](https://circleci.com/)
+*.circleci/config.yml*
 ```yaml
 version: 2
 jobs:
