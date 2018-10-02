@@ -29,9 +29,13 @@ cache:
   directories:
     - $HOME/.npm
 
+branches:
+  only:
+    - master
+
 script:
   - npm install
-  - npx plek now yourdomain.cc --app 'project-name'
+  - npx plek now yourdomain.cc --app 'project-name' --config '--public'
 ```
 
 #### [Circle CI](https://circleci.com/)
@@ -53,7 +57,7 @@ jobs:
 
       - run: npm install
 
-      - run: npx plek now yourdomain.cc --app 'project-name'
+      - run: npx plek now yourdomain.cc --app 'project-name' --config '--public'
 
       - save_cache:
           paths:
@@ -61,6 +65,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 ```
 
-Because these examples use the ZEIT Now service a [ZEIT token](https://zeit.co/account/tokens) is expected to be in the `NOW_TOKEN` environment variable of the CI.
+Because these examples use the ZEIT Now service, a [ZEIT token](https://zeit.co/account/tokens) is expected to be in the `NOW_TOKEN` environment variable of the CI. To set an environment variable see the [Travis CI](https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings) or [Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project) documentation.
 
-:rocket: Done! Your project will now be deployed for every commit.
+:rocket: Done! Your project will now be automatically deployed for every commit.
