@@ -2,9 +2,13 @@
   "name": "plek",
   "version": "0.0.0",
   "description": "",
-  "scripts": {},
-  "dependencies": {},
-  "devDependencies": {},
+  "scripts": {
+    "postinstall": "lerna bootstrap",
+    "lerna": "lerna"
+  },
+  "devDependencies": {
+    "lerna": "^3.4.0"
+  },
   "repository": {
     "url": "https://github.com/voorhoede/plek.git",
     "type": "git"
