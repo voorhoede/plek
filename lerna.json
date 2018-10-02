@@ -2,6 +2,7 @@
   "version": "2.0.2",
   "packages": [
     "packages/*",
+    "tests",
     "website"
   ]
 }
