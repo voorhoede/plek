@@ -14,7 +14,9 @@ raven
   .config('https://032b525989a645b991503e629465f8c4@sentry.io/1260219')
   .install();
 
-const server = micro(async (request, result) => {
+const server = micro(async (request, response) => {
+  if (request.url === '/events') return micro.send(response, 200);
+
   const {
     name,
     ciEnv: { repo, commit },
@@ -47,7 +49,7 @@ const server = micro(async (request, result) => {
       })
     )
 
-  return '';
+  return micro.send(response, 200);
 });
 
 const getInstallation = memoize(
