@@ -1,7 +1,6 @@
 {
+  "private": true,
   "name": "website",
-  "version": "1.0.0",
-  "description": "",
   "scripts": {
     "start": "npm run dev",
     "dev": "vuepress dev docs",

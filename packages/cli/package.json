@@ -1,7 +1,7 @@
 {
   "name": "plek",
   "version": "2.0.2",
-  "description": "",
+  "description": "Plek command line tool for continuous serverless deployment.",
   "main": "src/main.js",
   "bin": {
     "plek": "src/main.js"

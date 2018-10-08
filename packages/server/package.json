@@ -1,7 +1,6 @@
 {
+  "private": true,
   "name": "plek-server",
-  "version": "0.0.0",
-  "description": "",
   "main": "src/main.js",
   "files": [
     "src",
