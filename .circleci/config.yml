@@ -1,7 +1,7 @@
 version: 2
 
 defaults: &defaults
-  working_directory: ~/repo
+  working_directory: ~/plek
   docker:
     - image: circleci/node:8
 
@@ -17,19 +17,8 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Install CLI dependencies
+          name: Install dependencies
           command: npm install
-          working_directory: packages/cli
-
-      - run:
-          name: Install server dependencies
-          command: npm install
-          working_directory: packages/server
-
-      - run:
-          name: Install website dependencies
-          command: npm install
-          working_directory: website
 
       - save_cache:
           paths:
@@ -39,13 +28,21 @@ jobs:
           key: v1-dependencies-{{ checksum "packages/cli/package.json" }}-{{ checksum "packages/server/package.json" }}-{{ checksum "website/package.json" }}
 
       - persist_to_workspace:
-          root: ~/repo
+          root: ~/plek
           paths: .
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/plek
+      - run:
+          name: Run integration and unit tests
+          command: npm test
   publish:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ~/plek
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
@@ -57,7 +54,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ~/plek
       - run:
           name: Deploy documentation website
           command: |
@@ -78,6 +75,9 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - test:
+          requires:
+            - setup
       - deploy:
           requires:
             - setup
