@@ -4,8 +4,10 @@
   "description": "",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "lerna": "lerna"
+    "lerna": "lerna",
+    "clean": "lerna clean"
   },
+  "dependencies": {},
   "devDependencies": {
     "lerna": "^3.4.0"
   },
