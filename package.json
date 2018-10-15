@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "lerna": "lerna",
+    "test": "lerna exec npm test",
     "clean": "lerna clean"
   },
   "dependencies": {},
