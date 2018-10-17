@@ -11,21 +11,9 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "packages/cli/package.json" }}-{{ checksum "packages/server/package.json" }}-{{ checksum "website/package.json" }}
-          - v1-dependencies-
-
       - run:
           name: Install dependencies
           command: npm install
-
-      - save_cache:
-          paths:
-            - packages/cli/node_modules
-            - packages/server/node_modules
-            - website/node_modules
-          key: v1-dependencies-{{ checksum "packages/cli/package.json" }}-{{ checksum "packages/server/package.json" }}-{{ checksum "website/package.json" }}
 
       - persist_to_workspace:
           root: ~/plek
