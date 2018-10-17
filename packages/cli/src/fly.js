@@ -188,7 +188,7 @@ module.exports = {
     buildApp()
       .then(createTarball)
       .then(() => upload({ appName, stage }))
-      .then(() => process.env.DOMAIN),
+      .then(() => `https://${process.env.DOMAIN}`),
   alias: ({ appName }) => {
     return createApp(appName)
       .catch(({ response }) => {
