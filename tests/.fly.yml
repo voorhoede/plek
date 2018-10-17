@@ -1,0 +1,5 @@
+app: plek-test
+files:
+  - files/**
+config:
+  foo: bar

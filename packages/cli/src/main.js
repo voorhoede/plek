@@ -13,6 +13,7 @@ const getStdout = require('./get-stdout.js');
 
 // Service specific dependencies
 const importLazy = require('import-lazy')(require);
+const fly = importLazy('./fly.js');
 const now = importLazy('./now.js');
 
 raven
@@ -24,10 +25,11 @@ const hasSubdomain = domain => domain.split('.').length > 2;
 const backendAxios = axios.create({
   url: process.env.BACKEND_URL || 'https://plek-server.now.sh/',
   method: 'post',
-  transformRequest: data => JSON.stringify({
-    ...data,
-    name: path.parse(process.cwd()).name,
-  }),
+  transformRequest: data =>
+    JSON.stringify({
+      ...data,
+      name: path.parse(process.cwd()).name,
+    }),
 });
 
 const cleanupFlow = command => ciEnv => {
@@ -93,7 +95,7 @@ const aliasFlow = (command, domain) => ciEnv => {
     },
   });
 
-  return command().then(std => {
+  return command().then(output => {
     backendAxios({
       data: {
         ciEnv,
@@ -105,8 +107,8 @@ const aliasFlow = (command, domain) => ciEnv => {
       },
     });
 
-    console.info(std);
-    return std;
+    console.info(output);
+    return output;
   });
 };
 
@@ -147,6 +149,21 @@ commander
     cleanup(now.cleanup({ app, teamSlug: team.slug })).then(
       deploy(now.deploy({ config, app, teamFlag: team.flag })).then(url =>
         alias(now.alias({ url, teamFlag: team.flag }), domain)
+      )
+    );
+  });
+
+commander
+  .command('fly <appName>')
+  .option('-s, --stage [stage]', 'Environment stage to use', 'production')
+  .action((appName, { stage }) => {
+    cleanup(fly.cleanup()).then(
+      alias(
+        () =>
+          fly
+            .alias({ appName: process.env.DOMAIN.split('.')[0] })
+            .then(appName => deploy(fly.deploy({ appName, stage }))),
+        `${appName}.edgeapp.net`
       )
     );
   });
