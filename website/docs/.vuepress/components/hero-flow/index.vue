@@ -31,13 +31,19 @@
         </li>
         <li>
           <figure>
+            <img src="./logos/fly.svg" alt="">
+            <figcaption>Fly</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
             <img src="./logos/bash.svg" alt="">
-            <figcaption>Your own scripts</figcaption>
+            <figcaption>Custom scripts</figcaption>
           </figure>
         </li>
       </ul>
       <p>
-        Go with configured serverless services out of the box or your own scripts.
+        Go with configured serverless services out of the box or run your own scripts.
       </p>
     </div>
     <div class="hero-flow-item">
@@ -106,7 +112,7 @@
   }
 
   .hero-flow-item-deploy li {
-    animation-name: twoStepScroll;
+    animation-name: threeStepScroll;
     animation-delay: 4s;
   }
 
@@ -144,6 +150,20 @@
     }
 
     55%, 100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes threeStepScroll {
+    0%, 28% {
+      transform: translateY(-30rem);
+    }
+
+    38%, 72% {
+      transform: translateY(-15rem);
+    }
+
+    82%, 100% {
       transform: translateY(0);
     }
   }
