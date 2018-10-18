@@ -146,7 +146,7 @@ commander
       slug: team.slug || '',
     };
 
-    cleanup(now.cleanup({ app, teamSlug: team.slug })).then(
+    cleanup(now.cleanup({ app, teamSlug: team.slug, domain })).then(
       deploy(now.deploy({ config, app, teamFlag: team.flag })).then(url =>
         alias(now.alias({ url, teamFlag: team.flag }), domain)
       )

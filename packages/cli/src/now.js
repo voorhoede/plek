@@ -34,11 +34,12 @@ const getNonAliasedDeployments = ({ deployments, aliases }) =>
     deployment => !aliases.find(alias => alias.deployment.id === deployment.uid)
   );
 
-const getOldAliasedDeployments = ({ deployments, aliases }) =>
+const getOldAliasedDeployments = ({ deployments, aliases, domain }) =>
   deployments.filter(deployment =>
     aliases.find(
       alias =>
         alias.deployment.id === deployment.uid &&
+        alias.alias !== domain &&
         millisecondsToDays(Date.now() - deployment.created) > 30
     )
   );
@@ -60,29 +61,37 @@ const maybeGetTeamId = teamSlug =>
         .then(team => team.id)
     : Promise.resolve('');
 
-const cleanup = ({ app, teamSlug }) =>
-  maybeGetTeamId(teamSlug).then(teamId =>
-    Promise.all([
-      zeitAxios(`/now/deployments`, { params: { app, teamId } }),
-      zeitAxios('/now/aliases', { params: { teamId } }),
-    ])
-      .then(([deploymentsResponse, aliasesResponse]) => ({
-        deployments: deploymentsResponse.data.deployments,
-        aliases: aliasesResponse.data.aliases,
-      }))
-      .then(deploymentsData =>
-        [
-          ...getNonAliasedDeployments(deploymentsData),
-          ...getOldAliasedDeployments(deploymentsData),
-        ].map(({ uid }) =>
-          zeitAxios.delete(`/now/deployments/${uid}`, { params: { teamId } })
+const cleanup = ({ app, teamSlug, domain }) =>
+  maybeGetTeamId(teamSlug)
+    .then(teamId =>
+      Promise.all([
+        zeitAxios(`/now/deployments`, { params: { app, teamId } }),
+        zeitAxios('/now/aliases', { params: { teamId } }),
+      ])
+        .then(([deploymentsResponse, aliasesResponse]) => ({
+          deployments: deploymentsResponse.data.deployments,
+          aliases: aliasesResponse.data.aliases,
+        }))
+        .then(deploymentsData => {
+          console.log(JSON.stringify(deploymentsData, null, 4));
+          return deploymentsData;
+        })
+        .then(deploymentsData =>
+          [
+            ...getNonAliasedDeployments(deploymentsData),
+            ...getOldAliasedDeployments({ ...deploymentsData, domain }),
+          ]
+            .map(({ uid }) =>
+              zeitAxios.delete(`/now/deployments/${uid}`, {
+                params: { teamId },
+              })
+            )
         )
-      )
-  )
-  .catch(error => {
-    if (error.response && error.response.data.error.code === 'forbidden')
-      fatalError('The specified Now token is invalid.');
-  });
+    )
+    .catch(error => {
+      if (error.response && error.response.data.error.code === 'forbidden')
+        fatalError('The specified Now token is invalid.');
+    });
 
 module.exports = {
   cleanup: args => () => cleanup(args),

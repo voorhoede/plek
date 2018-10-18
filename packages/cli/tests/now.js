@@ -17,6 +17,7 @@ const fixture = {
   ],
   aliases: [
     {
+      alias: 'plek-test.now.sh',
       deployment: { id: '1' },
     },
   ],
@@ -29,7 +30,15 @@ test('getNonAliasedDeployments', t => {
 });
 
 test('getOldAliasedDeployments', t => {
-  t.plan(1);
+  t.plan(2);
 
-  t.deepEqual(now.getOldAliasedDeployments(fixture), [fixture.deployments[0]]);
+  t.deepEqual(
+    now.getOldAliasedDeployments({ ...fixture, domain: 'plek.now.sh' }),
+    [fixture.deployments[0]]
+  );
+
+  t.deepEqual(
+    now.getOldAliasedDeployments({ ...fixture, domain: 'plek-test.now.sh' }),
+    []
+  );
 });
