@@ -18,8 +18,10 @@ const createInstance = () =>
 
     ghAuth
       .getAppToken({
-        appId: process.env.APP_ID,
-        privateKey: String(Buffer.from(process.env.GH_PRIVATE_KEY, 'base64')),
+        appId: process.env.GITHUB_APP_IDENTIFIER,
+        privateKey: String(
+          Buffer.from(process.env.GITHUB_PRIVATE_KEY, 'base64')
+        ),
       })
       .then(appToken =>
         Promise.all([
