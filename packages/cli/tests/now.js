@@ -1,6 +1,6 @@
 'use strict';
 
-const test = require('tape');
+const test = require('ava');
 
 const now = require('../src/now.js');
 
@@ -24,14 +24,10 @@ const fixture = {
 };
 
 test('getNonAliasedDeployments', t => {
-  t.plan(1);
-
   t.deepEqual(now.getNonAliasedDeployments(fixture), [fixture.deployments[1]]);
 });
 
 test('getOldAliasedDeployments', t => {
-  t.plan(2);
-
   t.deepEqual(
     now.getOldAliasedDeployments({ ...fixture, domain: 'plek.now.sh' }),
     [fixture.deployments[0]]

@@ -4,12 +4,15 @@
   "description": "",
   "scripts": {
     "postinstall": "lerna --concurrency 2 bootstrap",
-    "lerna": "lerna",
-    "test": "lerna exec npm test",
+    "test": "NODE_ENV=test ava ./packages/*/tests/*.js",
+    "test:watch": "npm run test -- --watch",
+    "test:integration": "npm run test -- ./tests/main-flow.js",
+    "test:ci": "npm run test:integration -- --fail-fast",
     "clean": "lerna clean"
   },
   "dependencies": {},
   "devDependencies": {
+    "ava": "1.0.0-rc.1",
     "lerna": "^3.4.0"
   },
   "repository": {

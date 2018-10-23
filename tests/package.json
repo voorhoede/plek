@@ -1,10 +1,7 @@
 {
   "private": true,
-  "scripts": {
-    "test": "NODE_ENV=test ava main-flow.js"
-  },
-  "devDependencies": {
-    "ava": "1.0.0-rc.1",
-    "dotenv-safe": "^6.0.0"
+  "name": "integration-tests",
+  "dependencies": {
+    "dotenv-safe": "^6.1.0"
   }
 }

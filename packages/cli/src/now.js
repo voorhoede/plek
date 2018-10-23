@@ -72,10 +72,6 @@ const cleanup = ({ app, teamSlug, domain }) =>
           deployments: deploymentsResponse.data.deployments,
           aliases: aliasesResponse.data.aliases,
         }))
-        .then(deploymentsData => {
-          console.log(JSON.stringify(deploymentsData, null, 4));
-          return deploymentsData;
-        })
         .then(deploymentsData =>
           [
             ...getNonAliasedDeployments(deploymentsData),
