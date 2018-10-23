@@ -2,10 +2,6 @@
   "private": true,
   "name": "plek-server",
   "main": "src/main.js",
-  "files": [
-    "src",
-    ".env.example"
-  ],
   "scripts": {
     "start": "node $npm_package_main"
   },

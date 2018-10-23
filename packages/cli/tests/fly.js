@@ -1,6 +1,6 @@
 'use strict';
 
-const test = require('tape');
+const test = require('ava');
 
 const fly = require('../src/fly.js');
 
@@ -24,8 +24,6 @@ const fixture = [
 ];
 
 test('get pull request apps', t => {
-  t.plan(1);
-
   t.deepEqual(fly.getPrApps(fixture), [
     {
       id: 'pr-7-plek-test',

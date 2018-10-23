@@ -3,16 +3,17 @@
 const test = require('ava');
 const { exec } = require('child_process');
 const dotenv = require('dotenv-safe');
-const { join } = require('path');
+const path = require('path');
 const { promisify } = require('util');
 
 const server = require('../packages/server/src/server.js');
 const getStdout = require('../packages/cli/src/get-stdout.js');
 
-dotenv.config();
-dotenv.config({ path: '../packages/server/.env' });
-
-const getPackagePath = name => join(__dirname, '..', 'packages', name);
+dotenv.config({ path: './tests/.env', example: './tests/.env.example' });
+dotenv.config({
+  path: './packages/server/.env',
+  example: './packages/server/.env.example',
+});
 
 test.before(t => {
   process.env.CIRCLECI = 'true';
@@ -21,7 +22,7 @@ test.before(t => {
   process.env.CIRCLE_PROJECT_USERNAME = 'voorhoede';
   process.env.CIRCLE_PROJECT_REPONAME = 'plek';
 
-  t.context.cliPath = require.resolve(getPackagePath('cli'));
+  t.context.cliPath = require.resolve(path.join('..', 'packages', 'cli'));
 });
 
 test.beforeEach('start server', t => {
@@ -46,6 +47,7 @@ test.serial('Main flow using service ZEIT Now', t => {
 test.serial('Main flow using service Fly', t => {
   const subCommand = `fly plek-test`;
 
+  process.chdir('./tests');
   return promisify(exec)(`${t.context.cliPath} ${subCommand}`)
     .then(getStdout)
     .then(t.truthy);

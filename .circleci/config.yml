@@ -25,7 +25,7 @@ jobs:
           at: ~/plek
       - run:
           name: Run integration and unit tests
-          command: npm test
+          command: npm run test:ci
   publish:
     <<: *defaults
     steps:
