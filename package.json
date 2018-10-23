@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna --concurrency 1 bootstrap",
     "lerna": "lerna",
     "test": "lerna exec npm test",
     "clean": "lerna clean"
