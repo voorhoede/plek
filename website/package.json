@@ -8,7 +8,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "plek": "^2.0.0",
     "vuepress": "^0.14.0"
   },
   "repository": {

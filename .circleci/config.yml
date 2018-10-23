@@ -10,14 +10,13 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-
       - run:
           name: Install dependencies
           command: npm install
-
       - persist_to_workspace:
           root: ~/plek
           paths: .
+
   test:
     <<: *defaults
     steps:
@@ -26,6 +25,7 @@ jobs:
       - run:
           name: Run integration and unit tests
           command: npm run test:ci
+
   publish:
     <<: *defaults
     steps:
@@ -38,6 +38,7 @@ jobs:
           name: Publish package
           command: npm publish
           working_directory: packages/cli
+
   deploy:
     <<: *defaults
     steps:
@@ -48,11 +49,11 @@ jobs:
           command: |
             npm run build
             cd docs/.vuepress/dist
-            npx plek now plek.now.sh --team devoorhoede --app 'plek-website'
+            ../../../../packages/cli/src/main.js now plek.now.sh --team devoorhoede --app 'plek-website'
           working_directory: website
       - run:
           name: Deploy server
-          command: npx plek now plek-server.now.sh --team devoorhoede --app 'plek-server'
+          command: ../cli/src/main.js now plek-server.now.sh --team devoorhoede --app 'plek-server'
           working_directory: packages/server
 
 workflows:
