@@ -5,6 +5,7 @@
 [![David Server](https://img.shields.io/david/voorhoede/plek.svg?path=packages/server&style=flat-square&label=server)](https://david-dm.org/voorhoede/plek?path=packages/server)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/g/voorhoede/plek.svg?style=flat-square)](https://lgtm.com/projects/g/voorhoede/plek/)
 
+Trigger CircleCI
 *Make continuous deployment delightful.*
 
 Plek is a GitHub integration and command line tool run from a continuous integration service. Plek deploys changes automatically and provides configured services like [ZEIT Now](https://zeit.co/now) out of the box. Additionally Plek shows the deployment status for each commit and provides 'preview' deployments for pull requests.
