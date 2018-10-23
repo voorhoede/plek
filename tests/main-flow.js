@@ -18,7 +18,7 @@ dotenv.config({
 test.before(t => {
   process.env.CIRCLECI = 'true';
   process.env.CIRCLE_BRANCH = 'master';
-  process.env.CIRCLE_SHA1 = '79f0bd75b55ec306e2bb6213a72b2f468dbc099e';
+  process.env.CIRCLE_SHA1 = '9260fa23672111c63db08837b1cd0154f0aa297f';
   process.env.CIRCLE_PROJECT_USERNAME = 'voorhoede';
   process.env.CIRCLE_PROJECT_REPONAME = 'plek';
 
