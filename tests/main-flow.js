@@ -37,7 +37,7 @@ test.afterEach.always('stop server', t => {
 });
 
 test.serial('Main flow using service ZEIT Now', t => {
-  const subCommand = `now plek-integration-test.now.sh --team devoorhoede --config '--static --public' --app plek-test`;
+  const subCommand = `now plek-integration-test.now.sh --team devoorhoede --app plek-test -- --public --static`;
 
   return promisify(exec)(`${t.context.cliPath} ${subCommand}`)
     .then(getStdout)
