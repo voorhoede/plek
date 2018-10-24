@@ -35,7 +35,7 @@ branches:
 
 script:
   - npm install
-  - npx plek now yourdomain.cc --app 'project-name' --config '--public'
+  - npx plek now yourdomain.cc --app 'project-name' -- --public
 ```
 
 #### [Circle CI](https://circleci.com/)
@@ -57,7 +57,7 @@ jobs:
 
       - run: npm install
 
-      - run: npx plek now yourdomain.cc --app 'project-name' --config '--public'
+      - run: npx plek now yourdomain.cc --app 'project-name' -- --public
 
       - save_cache:
           paths:

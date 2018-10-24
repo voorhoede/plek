@@ -2,10 +2,10 @@
 'use strict';
 
 const axios = require('axios');
-const commander = require('commander');
 const getCiEnv = require('get-ci-env');
 const path = require('path');
 const raven = require('raven');
+const yargs = require('yargs');
 
 const exec = require('./exec.js');
 const fatalError = require('./fatal-error.js');
@@ -116,47 +116,88 @@ const [cleanup, deploy, alias] = [cleanupFlow, deployFlow, aliasFlow].map(
   flow => (...args) => getCiEnv().then(flow(...args))
 );
 
-commander.command('cleanup <command>').action(command => {
+yargs
+  .usage('$0 <cmd> [args]')
+  .demandCommand(1)
+  .help()
+  .alias('h', 'help')
+  .version()
+  .alias('v', 'version')
+  .example('$0 now myproject.now.sh --app myproject -- --public --static');
+
+yargs.command('cleanup <command>', 'Run cleanup step', ({ command }) => {
   cleanup(() => exec(command));
 });
 
-commander.command('deploy <command>').action(command => {
+yargs.command('deploy <command>', 'Run deploy step', ({ command }) => {
   deploy(() => exec(command).then(getStdout));
 });
 
-commander.command('alias <command> <domain>').action((command, domain) => {
-  alias(() => exec(command), domain);
-});
+yargs.command(
+  'alias <command> <domain>',
+  'Run alias step',
+  ({ command, domain }) => {
+    alias(() => exec(command), domain);
+  }
+);
 
-commander
-  .command('now <domain>')
-  .option('-a, --app <app>', 'Zeit Now app name')
-  .option('-c, --config <config>', 'Zeit Now CLI configuration flags', '')
-  .option('--team [team]', 'Zeit team name', team => ({
-    flag: `--team ${team}`,
-    slug: team,
-  }))
-  .action((domain, { config, app, team = {} }) => {
-    if (!app) throw Error('Missing Zeit Now app name argument');
+yargs.command(
+  'now <domain>',
+  `Use ZEIT Now, pass through flags to the Now CLI after the command seperated with "--",`,
+  {
+    app: {
+      alias: 'a',
+      describe: 'Zeit Now app name',
+      type: 'string',
+      nargs: 1,
+      demandOption: true,
+    },
+    team: {
+      alias: 't',
+      describe: 'Zeit team name',
+      type: 'string',
+      nargs: 1,
+      default: '',
+      coerce: team => ({
+        flag: team ? `--team ${team}` : '',
+        slug: team,
+      }),
+    },
+    nowFlags: {
+      skipValidation: true,
+      hidden: true,
+    },
+  },
+  ({ domain, app, team, _: nowFlags }) => {
     if (!process.env.NOW_TOKEN)
-      throw new Error('Missing NOW_TOKEN environment variable.');
+      throw Error('Missing NOW_TOKEN environment variable.');
 
-    team = {
-      flag: team.flag || '',
-      slug: team.slug || '',
-    };
+    nowFlags = nowFlags.slice(1).join(' ');
 
     cleanup(now.cleanup({ app, teamSlug: team.slug, domain })).then(
-      deploy(now.deploy({ config, app, teamFlag: team.flag })).then(url =>
+      deploy(now.deploy({ nowFlags, app, teamFlag: team.flag })).then(url =>
         alias(now.alias({ url, teamFlag: team.flag }), domain)
       )
     );
-  });
+  }
+);
 
-commander
-  .command('fly <appName>')
-  .option('-s, --stage [stage]', 'Environment stage to use', 'production')
-  .action((appName, { stage }) => {
+yargs.command(
+  'fly <appName>',
+  'Use Fly',
+  {
+    stage: {
+      alias: 's',
+      describe: 'Environment stage to use',
+      type: 'string',
+      nargs: 1,
+      default: 'production',
+    },
+  },
+  ({ appName, stage }) => {
+    if (!process.env.FLY_TOKEN)
+      throw Error('Missing FLY_TOKEN environment variable.');
+
     cleanup(fly.cleanup()).then(
       alias(
         () =>
@@ -166,9 +207,10 @@ commander
         `${appName}.edgeapp.net`
       )
     );
-  });
+  }
+);
 
-commander.parse(process.argv);
+yargs.parse(process.argv.slice(2));
 
 process.title = 'plek';
 process.on('unhandledRejection', fatalError);

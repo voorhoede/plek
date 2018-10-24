@@ -12,7 +12,7 @@ Plek is a GitHub integration and command line tool run from a continuous integra
 ----
 
 ## To start using Plek
-The Plek CLI available as npm package is run from a continuous integration script. For example the command to deploy a static website with ZEIT Now is: `npx plek now myproject.now.sh --config '--public --static' --app 'myproject'`. Plek will run through cleanup, deployment and aliasing using the commit context. Depending on this context Plek either deploys to the main domain or deploys to a subdomain for pull requests.
+The Plek CLI available as npm package is run from a continuous integration script. For example the command to deploy a static website with ZEIT Now is: `npx plek now myproject.now.sh --app myproject -- --public --static`. Plek will run through cleanup, deployment and aliasing using the commit context. Depending on this context Plek either deploys to the main domain or deploys to a subdomain for pull requests.
 
 **See the [documentation](https://plek.now.sh/) for more information.**
 

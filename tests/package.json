@@ -3,5 +3,6 @@
   "name": "integration-tests",
   "dependencies": {
     "dotenv-safe": "^6.1.0"
-  }
+  },
+  "devDependencies": {}
 }

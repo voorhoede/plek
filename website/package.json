@@ -9,11 +9,5 @@
   "dependencies": {},
   "devDependencies": {
     "vuepress": "^0.14.0"
-  },
-  "repository": {
-    "url": "https://github.com/voorhoede/plek.git",
-    "type": "git"
-  },
-  "author": "Selwyn <talk@selwyn.cc> (https://selwyn.cc/)",
-  "license": "MPL-2.0"
+  }
 }
