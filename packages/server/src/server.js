@@ -24,10 +24,7 @@ const createInstance = () =>
         ),
       })
       .then(appToken =>
-        Promise.all([
-          appToken,
-          getInstallation({ appToken, owner: repo.owner }),
-        ])
+        Promise.all([appToken, getInstallation({ appToken, repo })])
       )
       .then(([appToken, installation]) =>
         ghAuth.getAppInstallationToken({
@@ -51,14 +48,12 @@ const createInstance = () =>
   });
 
 const getInstallation = memoize(
-  ({ appToken, owner }) =>
+  ({ appToken, repo }) =>
     ghApi({
-      url: 'app/installations?per_page=100',
+      url: `repos/${repo.owner}/${repo.name}/installation`,
       token: appToken,
-    }).then(({ data }) =>
-      data.find(installation => installation.account.login === owner)
-    ),
-  ({ owner }) => owner
+    }).then(({ data }) => data),
+  ({ repo }) => `${repo.owner}/${repo.name}`
 );
 
 const updateGithubStatus = ({
