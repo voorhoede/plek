@@ -13,7 +13,9 @@ const createInstance = () =>
     const {
       name,
       ciEnv: { repo, commit },
-      commitStatus,
+      flow,
+      state,
+      targetUrl = '',
     } = await micro.json(request);
 
     ghAuth
@@ -32,14 +34,20 @@ const createInstance = () =>
           appToken,
         })
       )
-      .then(token =>
-        updateGithubStatus({
+      .then(token => [
+        token,
+        createGithubStatus({
           name,
-          body: commitStatus,
-          integrationEnv: {
-            repo,
-            commit,
-          },
+          flow,
+          state,
+          targetUrl,
+        }),
+      ])
+      .then(([token, status]) =>
+        updateGithubStatus({
+          status,
+          repo,
+          commit,
           token,
         })
       );
@@ -56,20 +64,35 @@ const getInstallation = memoize(
   ({ repo }) => `${repo.owner}/${repo.name}`
 );
 
-const updateGithubStatus = ({
-  name,
-  body,
-  integrationEnv: { repo, commit },
-  token,
-}) =>
+const createGithubStatus = ({ name, flow, state, targetUrl }) => {
+  const statusDescriptions = {
+    cleanup: {
+      pending: 'Cleaning up...',
+    },
+    deploy: {
+      pending: 'Deploying...',
+      success: 'Deployed!',
+    },
+    alias: {
+      pending: 'Wiring up domains...',
+      success: 'Deployed & aliased!',
+    },
+  };
+
+  return {
+    state,
+    target_url: targetUrl,
+    description: statusDescriptions[flow][state],
+    context: `plek${name ? `/${name}` : ''}`,
+  };
+};
+
+const updateGithubStatus = ({ status, repo, commit, token }) =>
   ghApi({
     method: 'post',
     url: `repos/${repo.owner}/${repo.name}/statuses/${commit}`,
     token,
-    data: {
-      ...body,
-      context: `plek${name ? `/${name}` : ''}`,
-    },
+    data: status,
   }).then(response => response.data.state);
 
 module.exports = {
