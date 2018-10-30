@@ -16,6 +16,7 @@ dotenv.config({
 });
 
 test.before(t => {
+  process.chdir('./tests');
   process.env.CIRCLECI = 'true';
   process.env.CIRCLE_BRANCH = 'master';
   process.env.CIRCLE_SHA1 = '9260fa23672111c63db08837b1cd0154f0aa297f';
@@ -47,7 +48,6 @@ test.serial('Main flow using service ZEIT Now', t => {
 test.serial('Main flow using service Fly', t => {
   const subCommand = `fly plek-test`;
 
-  process.chdir('./tests');
   return promisify(exec)(`${t.context.cliPath} ${subCommand}`)
     .then(getStdout)
     .then(t.truthy);
