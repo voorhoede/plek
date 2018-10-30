@@ -27,8 +27,8 @@ const backendAxios = axios.create({
   method: 'post',
   transformRequest: data =>
     JSON.stringify({
-      ...data,
       name: path.parse(process.cwd()).name,
+      ...data,
     }),
 });
 
@@ -36,10 +36,8 @@ const cleanupFlow = command => ciEnv => {
   backendAxios({
     data: {
       ciEnv,
-      commitStatus: {
-        description: 'Cleaning up, soapy...',
-        state: 'pending',
-      },
+      flow: 'cleanup',
+      state: 'pending',
     },
   });
 
@@ -50,10 +48,8 @@ const deployFlow = command => ciEnv => {
   backendAxios({
     data: {
       ciEnv,
-      commitStatus: {
-        description: 'Deploying, hang on...',
-        state: 'pending',
-      },
+      flow: 'deploy',
+      state: 'pending',
     },
   });
 
@@ -61,11 +57,9 @@ const deployFlow = command => ciEnv => {
     backendAxios({
       data: {
         ciEnv,
-        commitStatus: {
-          description: 'Deployed!',
-          state: 'success',
-          target_url: url,
-        },
+        flow: 'deploy',
+        state: 'success',
+        targetUrl: url,
       },
     });
 
@@ -88,10 +82,8 @@ const aliasFlow = (command, domain) => ciEnv => {
   backendAxios({
     data: {
       ciEnv,
-      commitStatus: {
-        description: 'Wiring up domains, untangling...',
-        state: 'pending',
-      },
+      flow: 'alias',
+      state: 'pending',
     },
   });
 
@@ -99,11 +91,9 @@ const aliasFlow = (command, domain) => ciEnv => {
     backendAxios({
       data: {
         ciEnv,
-        commitStatus: {
-          description: 'Deployed & aliased!',
-          state: 'success',
-          target_url: `https://${process.env.DOMAIN}`,
-        },
+        flow: 'alias',
+        state: 'success',
+        targetUrl: `https://${process.env.DOMAIN}`,
       },
     });
 
