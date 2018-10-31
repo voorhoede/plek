@@ -50,7 +50,9 @@ const createInstance = () =>
           commit,
           token,
         })
-      );
+      )
+      .then(console.info)
+      .catch(console.error);
 
     return micro.send(response, 200);
   });
