@@ -25,16 +25,13 @@ language: node_js
 node_js:
   - 8
 
-cache:
-  directories:
-    - $HOME/.npm
+cache: npm
 
 branches:
   only:
     - master
 
 script:
-  - npm install
   - npx plek now yourdomain.cc --app 'project-name' -- --public
 ```
 
