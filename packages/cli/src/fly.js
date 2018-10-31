@@ -10,87 +10,13 @@ const glob = require('glob');
 const yaml = require('js-yaml');
 const pako = require('pako');
 const tar = require('tar');
-const uglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
-const webpack = require('webpack');
+
+const { buildApp } = require('@fly/build');
 
 const flyAxios = axios.create({
   baseURL: 'https://fly.io',
   headers: { Authorization: `Bearer ${process.env.FLY_TOKEN}` },
 });
-
-const getWebpackConfig = () => {
-  let config;
-
-  const defaultPathToWebpackConfig = path.join(
-    process.cwd(),
-    'webpack.fly.config.js'
-  );
-  if (fs.existsSync(defaultPathToWebpackConfig)) {
-    config = require(defaultPathToWebpackConfig);
-  } else {
-    config = {
-      entry: `${process.cwd()}/index.js`,
-      resolve: {
-        extensions: ['.js'],
-      },
-    };
-  }
-  config.entry = config.entry || `${process.cwd()}/index.js`;
-  config.resolve = config.resolve || {
-    extensions: ['.js'],
-  };
-  config.devtool = 'source-map';
-  config.output = {
-    filename: 'bundle.js',
-    path: path.resolve(process.cwd(), '.fly/build'),
-    hashFunction: 'sha1',
-    hashDigestLength: 40,
-    sourceMapFilename: 'bundle.map.json',
-  };
-
-  const v8EnvPath = path.resolve(
-    path.resolve(path.dirname(require.resolve('@fly/v8env')), '..'),
-    'lib'
-  );
-
-  config.resolve = {
-    alias: {
-      ...config.resolve.alias,
-      '@fly/image': v8EnvPath + '/fly/image',
-      '@fly/proxy': v8EnvPath + '/fly/proxy',
-      '@fly/data': v8EnvPath + '/fly/data',
-      '@fly/cache': v8EnvPath + '/fly/cache',
-      '@fly/static': v8EnvPath + '/fly/static',
-      '@fly/fetch': v8EnvPath + '/fly/fetch',
-    },
-    ...config.resolve,
-  };
-
-  config.plugins = config.plugins || [];
-  config.plugins.push(
-    new uglifyjsWebpackPlugin({
-      parallel: true,
-      sourceMap: true,
-      uglifyOptions: {
-        output: { ascii_only: true },
-        mangle: false,
-      },
-    })
-  );
-
-  return config;
-};
-
-const buildApp = () =>
-  promisify(webpack)(getWebpackConfig()).then(stats => {
-    if (stats.hasErrors()) {
-      return Promise.reject(stats.toJson().errors);
-    }
-
-    console.info(`Compiled app in ${stats.endTime - stats.startTime}ms`);
-
-    return Promise.resolve();
-  });
 
 const createTarball = () => {
   const configPath = fs.existsSync(path.resolve('.fly', '.fly.yml'))
@@ -185,7 +111,7 @@ module.exports = {
       )
       .then(deployedPrApps => deployedPrApps.map(({ id }) => deleteApp(id))),
   deploy: ({ appName, stage }) => () =>
-    buildApp()
+    promisify(buildApp)(process.cwd(), { watch: false, uglify: true })
       .then(createTarball)
       .then(() => upload({ appName, stage }))
       .then(() => `https://${process.env.DOMAIN}`),
