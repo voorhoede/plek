@@ -64,12 +64,12 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - test:
-          requires:
-            - setup
       - deploy:
           requires:
             - setup
+      - test:
+          requires:
+            - deploy
       - publish:
           requires:
             - setup
