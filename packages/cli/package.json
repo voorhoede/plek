@@ -16,7 +16,7 @@
     "postversion": "git push --follow-tags"
   },
   "dependencies": {
-    "@fly/build": "^0.44.1",
+    "@fly/build": "^0.44.2",
     "axios": "^0.18.0",
     "get-ci-env": "^1.0.1",
     "glob": "^7.1.3",
