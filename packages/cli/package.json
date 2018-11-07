@@ -12,8 +12,7 @@
   "scripts": {
     "start": "node $npm_package_main",
     "test": "ava tests/*.js",
-    "preversion": "npm test",
-    "postversion": "git push --follow-tags"
+    "preversion": "npm test"
   },
   "dependencies": {
     "@fly/build": "^0.44.2",
