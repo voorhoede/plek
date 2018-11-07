@@ -5,14 +5,20 @@
       <ul class="hero-flow-item-ci">
         <li>
           <figure>
+            <img src="./logos/travis-ci.png" alt="">
+            <figcaption>Travis CI</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
             <img src="./logos/circleci.svg" alt="" width="120">
             <figcaption>CircleCI</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            <img src="./logos/travis-ci.png" alt="">
-            <figcaption>Travis CI</figcaption>
+            <img src="./logos/codefresh.svg" alt="">
+            <figcaption>Codefresh</figcaption>
           </figure>
         </li>
       </ul>
@@ -108,7 +114,7 @@
   }
 
   .hero-flow-item-ci li {
-    animation-name: twoStepScroll;
+    animation-name: threeStepScroll;
   }
 
   .hero-flow-item-deploy li {
@@ -142,16 +148,6 @@
     display: block;
     margin-right: 1rem;
     margin-left: 1rem;
-  }
-
-  @keyframes twoStepScroll {
-    0%, 45% {
-      transform: translateY(-15rem);
-    }
-
-    55%, 100% {
-      transform: translateY(0);
-    }
   }
 
   @keyframes threeStepScroll {
