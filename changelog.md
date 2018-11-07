@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [3.0.0] - 2018-11-06
 ### Added
-- [Fly](https://fly.io/) service integration for continuous edge computing delivery!
+- [Fly](https://fly.io/) service integration for continuous edge computing delivery, thanks to [@mrkurt](https://github.com/mrkurt) and [@michaeldwan](https://github.com/michaeldwan)!
 - Sentry error reporting for fatal errors.
 
 ### Changed
