@@ -49,9 +49,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - Initial release!
 
-[3.1.0]: https://github.com/voorhoede/plek/compare/v3.1.0...v3.0.0
-[3.0.0]: https://github.com/voorhoede/plek/compare/v3.0.0...v2.0.2
-[2.0.2]: https://github.com/voorhoede/plek/compare/v2.0.2...v2.0.1
-[2.0.1]: https://github.com/voorhoede/plek/compare/v2.0.1...v2.0.0
+[3.1.0]: https://github.com/voorhoede/plek/compare/v3.0.0...v3.1.0
+[3.0.0]: https://github.com/voorhoede/plek/compare/v2.0.2...v3.0.0
+[2.0.2]: https://github.com/voorhoede/plek/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/voorhoede/plek/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/voorhoede/plek/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/voorhoede/plek/compare/v1.0.0...v1.0.1
