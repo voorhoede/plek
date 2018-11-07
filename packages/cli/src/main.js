@@ -115,17 +115,28 @@ yargs
   .alias('v', 'version')
   .example('$0 now myproject.now.sh --app myproject -- --public --static');
 
-yargs.command('cleanup <command>', 'Run cleanup step', ({ command }) => {
-  cleanup(() => exec(command));
-});
+yargs.command(
+  'cleanup <command>',
+  'Run cleanup step with custom command',
+  {},
+  ({ command }) => {
+    cleanup(() => exec(command));
+  }
+);
 
-yargs.command('deploy <command>', 'Run deploy step', ({ command }) => {
-  deploy(() => exec(command).then(getStdout));
-});
+yargs.command(
+  'deploy <command>',
+  'Run deploy step with custom command',
+  {},
+  ({ command }) => {
+    deploy(() => exec(command).then(getStdout));
+  }
+);
 
 yargs.command(
   'alias <command> <domain>',
-  'Run alias step',
+  'Run alias step with custom command',
+  {},
   ({ command, domain }) => {
     alias(() => exec(command), domain);
   }
