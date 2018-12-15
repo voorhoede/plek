@@ -12,7 +12,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "1.0.0-rc.1",
+    "ava": "1.0.1",
     "lerna": "^3.4.0"
   },
   "repository": {
