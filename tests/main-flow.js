@@ -38,11 +38,12 @@ test.afterEach.always('stop server', t => {
 });
 
 test.serial('Main flow using service ZEIT Now', t => {
-  const subCommand = `now plek-integration-test.now.sh --team devoorhoede --app plek-test -- --public --static`;
+  const subCommand = `now plek-integration-test.now.sh --team devoorhoede --app plek-test -- --public`;
 
   return promisify(exec)(`${t.context.cliPath} ${subCommand}`)
     .then(getStdout)
-    .then(t.truthy);
+    .then(t.truthy)
+    .catch(error => t.true(error.includes('WARN')));
 });
 
 test.serial('Main flow using service Fly', t => {
