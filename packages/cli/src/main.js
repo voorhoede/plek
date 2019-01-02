@@ -113,7 +113,7 @@ yargs
   .alias('h', 'help')
   .version()
   .alias('v', 'version')
-  .example('$0 now myproject.now.sh --app myproject -- --public --static');
+  .example('$0 now myproject.now.sh --app myproject -- --public');
 
 yargs.command(
   'cleanup <command>',
