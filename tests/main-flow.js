@@ -42,8 +42,7 @@ test.serial('Main flow using service ZEIT Now', t => {
 
   return promisify(exec)(`${t.context.cliPath} ${subCommand}`)
     .then(getStdout)
-    .then(t.truthy)
-    .catch(error => t.true(error.includes('WARN')));
+    .then(t.truthy);
 });
 
 test.serial('Main flow using service Fly', t => {

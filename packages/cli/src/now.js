@@ -92,10 +92,10 @@ const cleanup = ({ app, teamSlug, domain }) =>
 module.exports = {
   cleanup: args => () => cleanup(args),
   deploy: ({ nowFlags, teamFlag, app }) => () =>
-    exec(`${nowBaseCommand} deploy ${teamFlag} --name ${app} ${nowFlags}`).then(
-      ({ stdout, stderr }) =>
-        stderr && !stderr.includes('Success') ? Promise.reject(stderr) : stdout
-    ),
+    exec(`${nowBaseCommand} deploy ${teamFlag} --name ${app} ${nowFlags}`)
+      .then(({ stdout, stderr }) =>
+        stderr && stderr.includes('Error') ? Promise.reject(stderr) : stdout
+      ),
   alias: ({ url, teamFlag }) => () =>
     exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`),
   getNonAliasedDeployments,
