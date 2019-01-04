@@ -5,5 +5,7 @@ const signale = require('signale');
 
 module.exports = error => {
   signale.error(error);
-  raven.captureException(error);
+  raven.captureException(error, () => {
+    process.exit(1);
+  });
 };
