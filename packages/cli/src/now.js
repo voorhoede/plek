@@ -89,15 +89,17 @@ const cleanup = ({ app, teamSlug, domain }) =>
         fatalError('The specified Now token is invalid.');
     });
 
+const processOutput = ({ stdout, stderr }) =>
+  stderr && stderr.includes('Error') ? Promise.reject(stderr) : stdout;
+
 module.exports = {
   cleanup: args => () => cleanup(args),
   deploy: ({ nowFlags, teamFlag, app }) => () =>
     exec(`${nowBaseCommand} deploy ${teamFlag} --name ${app} ${nowFlags}`)
-      .then(({ stdout, stderr }) =>
-        stderr && stderr.includes('Error') ? Promise.reject(stderr) : stdout
-      ),
+      .then(processOutput),
   alias: ({ url, teamFlag }) => () =>
     exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`)
+      .then(processOutput)
       .then(() => { return `${url} now points to ${process.env.DOMAIN}` }),
   getNonAliasedDeployments,
   getOldAliasedDeployments,
