@@ -5,6 +5,7 @@ const axios = require('axios');
 const getCiEnv = require('get-ci-env');
 const path = require('path');
 const raven = require('raven');
+const signale = require('signale');
 const yargs = require('yargs');
 
 const exec = require('./exec.js');
@@ -33,6 +34,7 @@ const backendAxios = axios.create({
 });
 
 const cleanupFlow = command => ciEnv => {
+  signale.start('cleaning up...');
   backendAxios({
     data: {
       ciEnv,
@@ -41,10 +43,13 @@ const cleanupFlow = command => ciEnv => {
     },
   });
 
-  return command();
+  return command().then(() => {
+    signale.success('cleaned up old domains & deployments');
+  });
 };
 
 const deployFlow = command => ciEnv => {
+  signale.start('deploying...');
   backendAxios({
     data: {
       ciEnv,
@@ -63,7 +68,7 @@ const deployFlow = command => ciEnv => {
       },
     });
 
-    console.info(url);
+    signale.success(`deployed to ${url}`);
     return url;
   });
 };
@@ -78,6 +83,7 @@ const aliasFlow = (command, domain) => ciEnv => {
   } else {
     return Promise.resolve();
   }
+  signale.start('aliasing domain...');
 
   backendAxios({
     data: {
@@ -97,7 +103,7 @@ const aliasFlow = (command, domain) => ciEnv => {
       },
     });
 
-    console.info(output);
+    signale.success(output);
     return output;
   });
 };

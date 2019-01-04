@@ -1,8 +1,9 @@
 'use strict';
 
 const raven = require('raven');
+const signale = require('signale');
 
 module.exports = error => {
-  console.error(error);
+  signale.error(error);
   raven.captureException(error);
 };

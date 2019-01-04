@@ -97,7 +97,8 @@ module.exports = {
         stderr && stderr.includes('Error') ? Promise.reject(stderr) : stdout
       ),
   alias: ({ url, teamFlag }) => () =>
-    exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`),
+    exec(`${nowBaseCommand} alias ${teamFlag} set ${url} $DOMAIN`)
+      .then(() => { return `${url} now points to ${process.env.DOMAIN}` }),
   getNonAliasedDeployments,
   getOldAliasedDeployments,
 };
