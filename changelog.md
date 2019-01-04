@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2019-01-04
+### Added
+- Support for the Now Platform 2.0, see the [upgrade guide](https://zeit.co/docs/v2/platform/upgrade-to-2-0) for more information.
+- Progress logging so it is easier to keep an eye on the progress and view the final outcome.
+
+### Changed
+- Fatal errors from commands including the `now` subcommand cause the process to exit with a non-zero code.
+
 ## [3.1.0] - 2018-11-07
 ### Fixed
 - Command parsing for the custom step subcommands: ` cleanup`, `deploy` and `alias`, thanks to [@thadeetrompetter](https://github.com/thadeetrompetter)!
@@ -49,6 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - Initial release!
 
+[3.2.0]: https://github.com/voorhoede/plek/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/voorhoede/plek/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/voorhoede/plek/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/voorhoede/plek/compare/v2.0.1...v2.0.2
