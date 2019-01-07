@@ -7,20 +7,11 @@ const path = require('path');
 const exec = require('./exec.js');
 const fatalError = require('./fatal-error.js');
 
-const isExecutable = path => {
-  try {
-    fs.accessSync(path, fs.constants.X_OK);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
-
-const nowCli = module.paths
-  .map(directory => path.join(directory, '.bin', 'now'))
-  .filter(isExecutable)[0];
-
-const nowBaseCommand = `${nowCli} --token $NOW_TOKEN`;
+const nowBaseCommand = `node ${path.join(
+  __dirname,
+  'vendor',
+  'now-cli.js'
+)} --token $NOW_TOKEN`;
 
 const zeitAxios = axios.create({
   baseURL: 'https://api.zeit.co/v3',
