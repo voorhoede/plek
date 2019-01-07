@@ -49,6 +49,7 @@ jobs:
           command: |
             npm run build
             cd docs/.vuepress/dist
+            cp ../../../now.json .
             ../../../../packages/cli/src/main.js now plek.now.sh --team devoorhoede --app 'plek-website'
           working_directory: website
       - run:
