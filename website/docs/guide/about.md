@@ -1,7 +1,7 @@
 # About Plek
 *Make continuous deployment delightful.*
 
-Plek is a GitHub integration and command line tool that runs from a continuous integration service, and it makes it easier to deploy changes and to give feedback on pull requests. Plek accomplishes this by providing the following features:
+Plek is a GitHub integration and command line tool run from a continuous integration service to make it easier to deploy changes and give feedback on pull requests. Plek does this by providing:
 
 ## Structure
 In three steps Plek simplifies the deployment flow:
