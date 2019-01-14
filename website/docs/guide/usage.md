@@ -1,13 +1,13 @@
 # Usage
 The Plek CLI comes with a subcommand for each supported service, which is what you probably want to use most of the time since it takes care of all steps.
 
-To run the CLI it will need to be in your `$PATH`, meaning it can be located. Depending on your installation method the `plek` commands below might need to be prefixed with `npx` or `./node_modules/.bin/`.
+To run the CLI, it will need to be in your `$PATH`, meaning it can be located. Depending on your installation method the `plek` commands below might need to be prefixed with `npx` or `./node_modules/.bin/`.
 
 ## Services
 ### [ZEIT Now](https://zeit.co/now)
 `plek now [options] <domain>`
 
-To use the CLI make sure the the `NOW_TOKEN` environment variable is set.
+To use the CLI make sure the `NOW_TOKEN` environment variable is set.
 
 ::: tip
 Set the [Now deployment region](https://zeit.co/docs/features/scaling) to ensure the appropriate region is used, the location detection of the Now CLI does not always go well with the CI service.
@@ -24,7 +24,7 @@ Accepts a base domain that is used for aliasing.
 ### [Fly](https://fly.io/)
 `fly [options] <appName>`
 
-To use the CLI make sure the the `FLY_TOKEN` environment variable is set.
+To use the CLI make sure the `FLY_TOKEN` environment variable is set.
 
 #### options
 - `stage`: Environment stage to use.
