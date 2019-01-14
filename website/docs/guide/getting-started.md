@@ -1,17 +1,12 @@
 # Getting started
-
 ## Continuous integration
-
 Plek runs from a continuous integration (CI) service as a command line tool (CLI). Plek uses the environment variables and files available in the CI to deploy and integrate.
 
 ## Installation
-
 ### 1. GitHub
-
 To integrate Plek with GitHub, install the [Plek GitHub app](https://github.com/apps/plek) on your GitHub account or organization, make sure you give it the necessary permissions.
 
 ### 2. CLI
-
 `npx plek` will run the Plek CLI as it is an npm package. When your project uses Node.js the recommended way to include Plek is by installing it as a development dependency with `npm install -D plek`. This way the version is pinned and the module can be cached by the CI service. Alternatively, use the latest version and skip installation by only using `npx plek`.
 
 ::: tip NOTE
@@ -19,11 +14,9 @@ To run the CLI, make sure your Node.js version is 8 or higher.
 :::
 
 ### 3. CI service
-
 Where and when to run Plek is up to you, but most of the time it will be from a CI script. Below you can find two minimal examples showing how to run Plek for each commit using the ZEIT Now service. The command using `npx plek` is where the magic happens, the rest is just boilerplate.
 
 #### [Travis CI](https://travis-ci.com/)
-
 *.travis.yml*
 
 ```yaml
@@ -43,7 +36,6 @@ script:
 ```
 
 #### [Circle CI](https://circleci.com/)
-
 *.circleci/config.yml*
 
 ```yaml
