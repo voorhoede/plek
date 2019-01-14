@@ -9,9 +9,9 @@ In three steps Plek simplifies the deployment flow:
 1. **Cleanup**  
    Removes old deployments and domain aliases that have already been merged into the master branch.
 2. **Deployment**  
-   Coupled to the deployment step, make the deployment accessible through a domain.
+   Deploys the latest commit from the master branch or deploys pull request changes to preview.
 3. **Aliasing**  
-   Together with the deployment step, it makes the deployment accessible through a domain alias.
+   Coupled to the deployment step, make the deployment accessible through a domain.
 
 Each step is available as a separate command which can be used in custom scripts.
 
