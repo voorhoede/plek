@@ -64,4 +64,8 @@ jobs:
 
 Because these examples use the ZEIT Now service, a [ZEIT token](https://zeit.co/account/tokens) is expected to be in the `NOW_TOKEN` environment variable of the CI. To set an environment variable see the [Travis CI](https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings) or [Circle CI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project) documentation.
 
+::: tip
+No domain? No problem, use a `.now.sh` domain for free using ZEIT Now, for example: `plek now hi-there.now.sh`.
+:::
+
 :rocket: Done! Your project will now be automatically deployed for every commit.
