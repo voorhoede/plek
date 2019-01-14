@@ -4,7 +4,7 @@ Plek runs from a continuous integration (CI) service as a command line tool (CLI
 
 ## Installation
 ### 1. GitHub
-To integrate Plek with GitHub, install the [Plek GitHub app](https://github.com/apps/plek) on your GitHub account or organization, make sure you give it the necessary permissions.
+To integrate Plek with GitHub, install the [Plek GitHub app](https://github.com/apps/plek) on your GitHub account or organization, make sure to give it access to the repository you deploy from.
 
 ### 2. CLI
 `npx plek` will run the Plek CLI as it is an npm package. When your project uses Node.js the recommended way to include Plek is by installing it as a development dependency with `npm install -D plek`. This way the version is pinned and the module can be cached by the CI service. Alternatively, use the latest version and skip installation by only using `npx plek`.
