@@ -10,7 +10,6 @@ const yargs = require('yargs');
 
 const exec = require('./exec.js');
 const fatalError = require('./fatal-error.js');
-const getStdout = require('./get-stdout.js');
 
 // Service specific dependencies
 const importLazy = require('import-lazy')(require);
@@ -135,7 +134,12 @@ yargs.command(
   'Run deploy step with custom command',
   {},
   ({ command }) => {
-    deploy(() => exec(command).then(getStdout));
+    deploy(
+      () => exec(command).then(({ stdout, stderr }) => {
+        signale.note(stderr);
+        return stdout;
+      })
+    );
   }
 );
 

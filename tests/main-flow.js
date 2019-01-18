@@ -7,7 +7,9 @@ const path = require('path');
 const { promisify } = require('util');
 
 const server = require('../packages/server/src/server.js');
-const getStdout = require('../packages/cli/src/get-stdout.js');
+
+const getStdout = std =>
+  std.stderr ? Promise.reject(std.stderr) : Promise.resolve(std.stdout);
 
 dotenv.config({ path: './tests/.env', example: './tests/.env.example' });
 dotenv.config({
@@ -19,7 +21,7 @@ test.before(t => {
   process.chdir('./tests');
   process.env.CIRCLECI = 'true';
   process.env.CIRCLE_BRANCH = 'master';
-  process.env.CIRCLE_SHA1 = '9260fa23672111c63db08837b1cd0154f0aa297f';
+  process.env.CIRCLE_SHA1 = '7227818534c42cebb9ab34d8f71141501ac35a9c';
   process.env.CIRCLE_PROJECT_USERNAME = 'voorhoede';
   process.env.CIRCLE_PROJECT_REPONAME = 'plek';
 
