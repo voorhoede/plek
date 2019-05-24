@@ -23,7 +23,7 @@ const nowCli = module.paths
 const nowBaseCommand = `${nowCli} --token $NOW_TOKEN`;
 
 const zeitAxios = axios.create({
-  baseURL: 'https://api.zeit.co/v3',
+  baseURL: 'https://api.zeit.co/',
   headers: { Authorization: `Bearer ${process.env.NOW_TOKEN}` },
 });
 
@@ -55,7 +55,7 @@ const getTeam = ({ teams, teamSlug }) =>
 
 const maybeGetTeamId = teamSlug =>
   teamSlug
-    ? zeitAxios('/teams')
+    ? zeitAxios('/v1/teams')
         .then(({ data }) => data.teams)
         .then(teams => getTeam({ teams, teamSlug }))
         .then(team => team.id)
@@ -65,8 +65,8 @@ const cleanup = ({ app, teamSlug, domain }) =>
   maybeGetTeamId(teamSlug)
     .then(teamId =>
       Promise.all([
-        zeitAxios(`/now/deployments`, { params: { app, teamId } }),
-        zeitAxios('/now/aliases', { params: { teamId } }),
+        zeitAxios(`/v3/now/deployments`, { params: { app, teamId } }),
+        zeitAxios('/v2/now/aliases', { params: { teamId } }),
       ])
         .then(([deploymentsResponse, aliasesResponse]) => ({
           deployments: deploymentsResponse.data.deployments,
@@ -78,7 +78,7 @@ const cleanup = ({ app, teamSlug, domain }) =>
             ...getOldAliasedDeployments({ ...deploymentsData, domain }),
           ]
             .map(({ uid }) =>
-              zeitAxios.delete(`/now/deployments/${uid}`, {
+              zeitAxios.delete(`/v3/now/deployments/${uid}`, {
                 params: { teamId },
               })
             )
