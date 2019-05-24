@@ -6,12 +6,12 @@
     "start": "node $npm_package_main"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "dotenv-safe": "^6.1.0",
-    "jsonwebtoken": "^8.4.0",
-    "lodash.memoize": "^4.1.2",
-    "micro": "^9.1.4",
-    "raven": "^2.6.3"
+    "axios": "0.18.0",
+    "dotenv-safe": "6.1.0",
+    "jsonwebtoken": "8.4.0",
+    "lodash.memoize": "4.1.2",
+    "micro": "9.3.3",
+    "raven": "2.6.4"
   },
   "devDependencies": {},
   "repository": {
