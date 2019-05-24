@@ -159,12 +159,12 @@ yargs.command(
     },
     team: {
       alias: 't',
-      describe: 'Zeit team name',
+      describe: 'Zeit team name slug',
       type: 'string',
       nargs: 1,
       default: '',
       coerce: team => ({
-        flag: team ? `--team ${team}` : '',
+        flag: team ? `--scope ${team}` : '',
         slug: team,
       }),
     },
