@@ -15,7 +15,7 @@
     "preversion": "npm test"
   },
   "dependencies": {
-    "@fly/build": "^0.46.0",
+    "@fly/build": "^0.51.2",
     "axios": "^0.18.0",
     "get-ci-env": "^1.1.0",
     "glob": "^7.1.4",
