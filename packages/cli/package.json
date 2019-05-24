@@ -18,15 +18,15 @@
     "@fly/build": "^0.46.0",
     "axios": "^0.18.0",
     "get-ci-env": "^1.1.0",
-    "glob": "^7.1.3",
-    "import-lazy": "^3.1.0",
-    "js-yaml": "^3.12.0",
+    "glob": "^7.1.4",
+    "import-lazy": "^4.0.0",
+    "js-yaml": "^3.13.1",
     "now": "^14.0.0",
-    "pako": "^1.0.7",
+    "pako": "^1.0.10",
     "raven": "^2.6.3",
-    "signale": "^1.3.0",
+    "signale": "^1.4.0",
     "tar": "^4.4.8",
-    "yargs": "^13.0.0"
+    "yargs": "^13.2.4"
   },
   "devDependencies": {},
   "repository": {
