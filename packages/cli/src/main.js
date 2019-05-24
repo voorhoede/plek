@@ -22,52 +22,50 @@ raven
 
 const hasSubdomain = domain => domain.split('.').length > 2;
 
-const backendAxios = axios.create({
+const backendAxios = data => axios({
   url: process.env.BACKEND_URL || 'https://plek-server.now.sh/',
   method: 'post',
-  transformRequest: data =>
+  transformRequest: requestData =>
     JSON.stringify({
       name: path.parse(process.cwd()).name,
-      ...data,
+      ...requestData,
     }),
-});
+  data,
+})
+  .catch(() => signale.warn(
+    'Could not reach server to update GitHub commit status'
+  ));
 
 const cleanupFlow = command => ciEnv => {
-  signale.start('cleaning up...');
+  signale.start('Cleaning up...');
   backendAxios({
-    data: {
-      ciEnv,
-      flow: 'cleanup',
-      state: 'pending',
-    },
+    ciEnv,
+    flow: 'cleanup',
+    state: 'pending',
   });
 
   return command().then(() => {
-    signale.success('cleaned up old domains & deployments');
+    signale.success('Cleaned up old domains & deployments');
   });
 };
 
 const deployFlow = command => ciEnv => {
-  signale.start('deploying...');
+  signale.start('Deploying...');
   backendAxios({
-    data: {
-      ciEnv,
-      flow: 'deploy',
-      state: 'pending',
-    },
+    ciEnv,
+    flow: 'deploy',
+    state: 'pending',
   });
 
   return command().then(url => {
     backendAxios({
-      data: {
-        ciEnv,
-        flow: 'deploy',
-        state: 'success',
-        targetUrl: url,
-      },
+      ciEnv,
+      flow: 'deploy',
+      state: 'success',
+      targetUrl: url,
     });
 
-    signale.success(`deployed to ${url}`);
+    signale.success(`Deployed to ${url}`);
     return url;
   });
 };
@@ -82,24 +80,20 @@ const aliasFlow = (command, domain) => ciEnv => {
   } else {
     return Promise.resolve();
   }
-  signale.start('aliasing domain...');
+  signale.start('Aliasing domain...');
 
   backendAxios({
-    data: {
-      ciEnv,
-      flow: 'alias',
-      state: 'pending',
-    },
+    ciEnv,
+    flow: 'alias',
+    state: 'pending',
   });
 
   return command().then(output => {
     backendAxios({
-      data: {
-        ciEnv,
-        flow: 'alias',
-        state: 'success',
-        targetUrl: `https://${process.env.DOMAIN}`,
-      },
+      ciEnv,
+      flow: 'alias',
+      state: 'success',
+      targetUrl: `https://${process.env.DOMAIN}`,
     });
 
     signale.success(output);
