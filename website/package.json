@@ -8,6 +8,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "vuepress": "^1.0.0-alpha.30"
+    "vuepress": "1.0.0-alpha.30"
   }
 }
