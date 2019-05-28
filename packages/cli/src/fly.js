@@ -3,7 +3,6 @@
 const { createHash } = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { promisify } = require('util');
 
 const axios = require('axios');
 const glob = require('glob');
@@ -111,7 +110,11 @@ module.exports = {
       )
       .then(deployedPrApps => deployedPrApps.map(({ id }) => deleteApp(id))),
   deploy: ({ appName, stage }) => () =>
-    promisify(buildApp)(process.cwd(), { watch: false, uglify: true })
+    buildApp({
+      inputPath: process.cwd(),
+      outputPath: path.resolve('.fly/build'),
+      uglify: true,
+    })
       .then(createTarball)
       .then(() => upload({ appName, stage }))
       .then(() => `https://${process.env.DOMAIN}`),
