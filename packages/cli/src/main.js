@@ -4,7 +4,6 @@
 const axios = require('axios');
 const getCiEnv = require('get-ci-env');
 const path = require('path');
-const raven = require('raven');
 const signale = require('signale');
 const yargs = require('yargs');
 
@@ -15,10 +14,6 @@ const fatalError = require('./fatal-error.js');
 const importLazy = require('import-lazy')(require);
 const fly = importLazy('./fly.js');
 const now = importLazy('./now.js');
-
-raven
-  .config('https://7e1cc5b59bf742d587a7651bedcd95a8@sentry.io/1260110')
-  .install();
 
 const hasSubdomain = domain => domain.split('.').length > 2;
 
