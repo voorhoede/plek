@@ -6,7 +6,7 @@
     "start": "node $npm_package_main"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "dotenv-safe": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "lodash.memoize": "^4.1.2",
