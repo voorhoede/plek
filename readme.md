@@ -1,9 +1,7 @@
 # Plek
-[![CircleCI](https://img.shields.io/circleci/project/github/voorhoede/plek/master.svg?style=flat-square)](https://circleci.com/gh/voorhoede/plek/)
-[![npm](https://img.shields.io/npm/v/plek.svg?style=flat-square)](https://www.npmjs.com/package/plek)
-[![David CLI](https://img.shields.io/david/voorhoede/plek.svg?path=packages/cli&style=flat-square&label=cli)](https://david-dm.org/voorhoede/plek?path=packages/cli)
-[![David Server](https://img.shields.io/david/voorhoede/plek.svg?path=packages/server&style=flat-square&label=server)](https://david-dm.org/voorhoede/plek?path=packages/server)
-[![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/g/voorhoede/plek.svg?style=flat-square)](https://lgtm.com/projects/g/voorhoede/plek/)
+[![CircleCI Build Status][circleci-icon]][circleci]
+[![LGTM Grade][lgtm-icon]][lgtm]
+[![npm][npm-icon]][npm]
 
 *Make continuous deployment delightful.*
 
@@ -18,3 +16,10 @@ The Plek CLI available as npm package is run from a continuous integration scrip
 
 ## To start developing Plek
 To run this project Node.js version 8 or above is required. The CLI and server code for plek is inside the `packages` directory and the website including docs can be found in the `website` directory. To install dependencies for all packages and the website run `npm install` from the project root.
+
+[circleci]: https://circleci.com/gh/voorhoede/plek/
+[circleci-icon]: https://img.shields.io/circleci/project/github/voorhoede/plek/master.svg?style=flat-square
+[lgtm]: https://lgtm.com/projects/g/voorhoede/plek/
+[lgtm-icon]: https://img.shields.io/lgtm/grade/javascript/g/voorhoede/plek.svg?style=flat-square
+[npm]: https://www.npmjs.com/package/plek
+[npm-icon]: https://img.shields.io/npm/v/plek.svg?style=flat-square
