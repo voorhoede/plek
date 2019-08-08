@@ -12,8 +12,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "^2.0.0",
-    "lerna": "^3.14.1"
+    "ava": "^2.2.0",
+    "lerna": "^3.16.4"
   },
   "repository": {
     "url": "https://github.com/voorhoede/plek.git",

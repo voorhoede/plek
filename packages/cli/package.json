@@ -21,11 +21,11 @@
     "glob": "^7.1.4",
     "import-lazy": "^4.0.0",
     "js-yaml": "^3.13.1",
-    "now": "^16.0.0",
+    "now": "^16.1.1",
     "pako": "^1.0.10",
     "signale": "^1.4.0",
-    "tar": "^4.4.8",
-    "yargs": "^13.2.4"
+    "tar": "^4.4.10",
+    "yargs": "^13.3.0"
   },
   "devDependencies": {},
   "repository": {
