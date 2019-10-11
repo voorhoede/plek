@@ -42,11 +42,11 @@ const getNonAliasedDeployments = ({ deployments, aliases }) =>
 const getOldAliasedDeployments = ({ deployments, aliases, domain }) =>
   deployments.filter(deployment =>
     aliases.find(
-      alias => {
+      alias => (
         alias.deployment.id === deployment.uid &&
         alias.alias !== domain &&
         millisecondsToDays(Date.now() - deployment.created) > 60
-      }
+      )
     )
   );
 
