@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.3] - 2019-10-11
+### Changed
+- Now CLI dependency to version 16 to decrease the package size by half its original size and improve yarn detection.
+- Bump removal of old aliased deployments from thirty to sixty days.
+
 ## [3.2.2] - 2019-05-28
 ### Fixed
 - CLI fatal error when connection to Plek server fails, things should now be chugging on with a logged warning.
@@ -65,6 +70,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - Initial release!
 
+[3.2.3]: https://github.com/voorhoede/plek/compare/v3.2.2...v3.2.3
 [3.2.2]: https://github.com/voorhoede/plek/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/voorhoede/plek/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/voorhoede/plek/compare/v3.1.0...v3.2.0
