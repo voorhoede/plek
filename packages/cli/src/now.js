@@ -29,6 +29,11 @@ const zeitAxios = axios.create({
 
 const millisecondsToDays = ms => ms / 1000 / 60 / 60 / 24;
 
+const getProjectId = ({ name, teamId }) =>
+  zeitAxios(`/v1/projects/${name}`, { params: { teamId }})
+    .then(({ data: { id } }) => id)
+    .catch(() => fatalError(`Could not fetch project ${name}.`));
+
 const getNonAliasedDeployments = ({ deployments, aliases }) =>
   deployments.filter(
     deployment => !aliases.find(alias => alias.deployment.id === deployment.uid)
@@ -37,10 +42,11 @@ const getNonAliasedDeployments = ({ deployments, aliases }) =>
 const getOldAliasedDeployments = ({ deployments, aliases, domain }) =>
   deployments.filter(deployment =>
     aliases.find(
-      alias =>
+      alias => {
         alias.deployment.id === deployment.uid &&
         alias.alias !== domain &&
-        millisecondsToDays(Date.now() - deployment.created) > 30
+        millisecondsToDays(Date.now() - deployment.created) > 60
+      }
     )
   );
 
@@ -64,10 +70,13 @@ const maybeGetTeamId = teamSlug =>
 const cleanup = ({ app, teamSlug, domain }) =>
   maybeGetTeamId(teamSlug)
     .then(teamId =>
-      Promise.all([
-        zeitAxios(`/v3/now/deployments`, { params: { app, teamId } }),
-        zeitAxios('/v2/now/aliases', { params: { teamId } }),
-      ])
+      getProjectId({ name: app, teamId })
+        .then(projectId =>
+          Promise.all([
+            zeitAxios(`/v3/now/deployments`, { params: { app, teamId } }),
+            zeitAxios('/v2/now/aliases', { params: { teamId, projectId } }),
+          ])
+        )
         .then(([deploymentsResponse, aliasesResponse]) => ({
           deployments: deploymentsResponse.data.deployments,
           aliases: aliasesResponse.data.aliases,
