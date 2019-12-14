@@ -15,7 +15,7 @@ The Plek CLI available as npm package is run from a continuous integration scrip
 **See the [documentation](https://plek.now.sh/) for more information.**
 
 ## To start developing Plek
-To run this project Node.js version 8 or above is required. The CLI and server code for plek is inside the `packages` directory and the website including docs can be found in the `website` directory. To install dependencies for all packages and the website run `npm install` from the project root.
+The CLI and server code for plek is inside the `packages` directory and the website including docs can be found in the `website` directory. To install dependencies for all packages and the website run `yarn install` from the project root.
 
 [circleci]: https://circleci.com/gh/voorhoede/plek/
 [circleci-icon]: https://img.shields.io/circleci/project/github/voorhoede/plek/master.svg?style=flat-square

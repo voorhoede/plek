@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "plek-server",
+  "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
     "start": "node $npm_package_main"

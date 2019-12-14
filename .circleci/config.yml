@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
+          command: yarn install
       - persist_to_workspace:
           root: ~/plek
           paths: .
@@ -24,7 +24,7 @@ jobs:
           at: ~/plek
       - run:
           name: Run integration and unit tests
-          command: npm run test:ci
+          command: yarn test:ci
 
   publish:
     <<: *defaults
@@ -36,7 +36,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run:
           name: Publish package
-          command: npm publish
+          command: yarn publish
           working_directory: packages/cli
 
   deploy:
@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Deploy documentation website
           command: |
-            npm run build
+            yarn build
             cd docs/.vuepress/dist
             cp ../../../now.json .
             ../../../../packages/cli/src/main.js now plek.now.sh --team devoorhoede --app 'plek-website'
