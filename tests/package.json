@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "integration-tests",
+  "version": "1.0.0",
   "dependencies": {
     "dotenv-safe": "^6.1.0"
   },

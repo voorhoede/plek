@@ -1,19 +1,21 @@
 {
+  "private": true,
   "name": "plek",
-  "version": "0.0.0",
-  "description": "",
+  "workspaces": [
+    "packages/cli",
+    "packages/server",
+    "website",
+    "tests"
+  ],
   "scripts": {
-    "postinstall": "lerna --concurrency 2 bootstrap",
     "test": "NODE_ENV=test ava ./packages/*/tests/*.js",
     "test:watch": "npm run test -- --watch",
     "test:integration": "npm run test -- ./tests/main-flow.js",
-    "test:ci": "npm run test:integration -- --fail-fast",
-    "clean": "lerna clean"
+    "test:ci": "npm run test:integration -- --fail-fast"
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "^2.4.0",
-    "lerna": "^3.17.0"
+    "ava": "^2.4.0"
   },
   "repository": {
     "url": "https://github.com/voorhoede/plek.git",
