@@ -23,7 +23,7 @@
     "pako": "^1.0.10",
     "signale": "^1.4.0",
     "tar": "^4.4.10",
-    "yargs": "^15.0.2"
+    "yargs": "^15.1.0"
   },
   "devDependencies": {},
   "repository": {
