@@ -5,6 +5,8 @@
 
 *Make continuous deployment delightful.*
 
+**This project is currently archived since we do not use this tool anymore internally.**
+
 Plek is a GitHub integration and command line tool run from a continuous integration service. Plek deploys changes automatically and provides configured services like [ZEIT Now](https://zeit.co/now) out of the box. Additionally Plek shows the deployment status for each commit and provides 'preview' deployments for pull requests.
 
 ----
